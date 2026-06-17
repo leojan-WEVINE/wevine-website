@@ -1,0 +1,460 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import Navbar from "@/components/Navbar";
+
+
+
+const collectionData = {
+  "atelier-weave": {
+    title: { en: "Atelier Weave", zh: "工坊編織" },
+    subtitle: {
+      en: "Layered handcrafted weaves with refined artisanal rhythm.",
+      zh: "帶有工藝節奏感的層次手工編織紋理。",
+    },
+    textureTitle: {
+      en: "The Beauty of Handwoven Rhythm",
+      zh: "手工編織節奏之美",
+    },
+    textureText: {
+      en: "Atelier Weave expresses the quiet intelligence of handwoven surfaces. Subtle tonal shifts, refined fiber structure, and natural irregularities come together to create a wallcovering with warmth, depth, and timeless restraint.",
+      zh: "Atelier Weave 以細緻的手工編織表情，呈現天然壁材安靜而深邃的層次。細微色澤變化、纖維結構與自然不規則感交織成溫潤、克制且歷久彌新的牆面質感。",
+    },
+    textureImage: "/images/textures/atelier-weave-texture.jpg",
+    spaceBoard: "/images/spaces/atelier-weave-space-board.jpg",
+    products: Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/products/atelier-weave/atelier-weave-${String(i + 1).padStart(
+          2,
+          "0"
+        )}.jpg`
+    ),
+  },
+
+  "timber-trace": {
+    title: { en: "Timber Trace", zh: "木紋軌跡" },
+    subtitle: {
+      en: "Natural textures inspired by weathered wood and organic grain.",
+      zh: "靈感來自風化木紋與自然肌理的溫潤表情。",
+    },
+    textureTitle: {
+      en: "Traces of Natural Grain",
+      zh: "自然木紋的時間痕跡",
+    },
+    textureText: {
+      en: "Timber Trace follows the quiet movement of aged wood, softened grain, and earth-toned fiber. Its surface carries a grounded warmth, offering interiors a calm architectural rhythm shaped by nature.",
+      zh: "Timber Trace 捕捉老木紋理、柔化肌理與大地色纖維的自然流動。其表面帶有沉穩溫度，為空間注入由自然形塑而成的安定節奏。",
+    },
+    textureImage: "/images/textures/timber-trace-texture.jpg",
+    spaceBoard: "/images/spaces/timber-trace-space-board.jpg",
+    products: Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/products/timber-trace/timber-trace-${String(i + 1).padStart(
+          2,
+          "0"
+        )}.jpg`
+    ),
+  },
+
+  "drift-weave": {
+    title: { en: "Drift Weave", zh: "流紋編織" },
+    subtitle: {
+      en: "Soft flowing weaves with quiet movement and tonal depth.",
+      zh: "帶有柔和流動感與色澤層次的編織語言。",
+    },
+    textureTitle: {
+      en: "Soft Movement in Woven Form",
+      zh: "柔和流動的編織形態",
+    },
+    textureText: {
+      en: "Drift Weave is shaped by gentle movement, softened texture, and subtle tonal transitions. Its woven rhythm gives walls a sense of air, flow, and quiet spatial depth.",
+      zh: "Drift Weave 以柔和動勢、細膩肌理與微妙色階轉換構成。其編織節奏讓牆面帶有空氣感、流動性與安靜的空間深度。",
+    },
+    textureImage: "/images/textures/drift-weave-texture.jpg",
+    spaceBoard: "/images/spaces/drift-weave-space-board.jpg",
+    products: Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/products/drift-weave/drift-weave-${String(i + 1).padStart(
+          2,
+          "0"
+        )}.jpg`
+    ),
+  },
+
+  "totem-grain": {
+    title: { en: "Totem Grain", zh: "圖騰紋理" },
+    subtitle: {
+      en: "Ancestral geometry woven into warm earthy textures.",
+      zh: "將部落幾何與溫潤天然肌理融合的編織語彙。",
+    },
+    textureTitle: {
+      en: "Rooted Texture, Tribal Rhythm",
+      zh: "原始肌理與部落節奏",
+    },
+    textureText: {
+      en: "Totem Grain draws inspiration from tribal carvings, desert lodges, and handcrafted woven patterns. Its layered geometric rhythm creates a grounded atmosphere filled with warmth, shadow, and sculptural depth.",
+      zh: "Totem Grain 靈感源自部落雕刻、沙漠旅宿與手工編織圖騰。層層交錯的幾何節奏，營造出帶有陰影深度與雕塑感的沉穩空間氛圍。",
+    },
+    textureImage: "/images/textures/totem-grain-texture.jpg",
+    spaceBoard: "/images/spaces/totem-grain-space-board.jpg",
+    products: Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/products/totem-grain/totem-grain-${String(i + 1).padStart(
+          2,
+          "0"
+        )}.jpg`
+    ),
+  },
+
+  "palette-weave": {
+    title: { en: "Palette Weave", zh: "織彩系列" },
+    subtitle: {
+      en: "Woven color for modern living.",
+      zh: "為現代生活織入色彩。",
+    },
+    textureTitle: {
+      en: "Soft Color, Editorial Texture",
+      zh: "柔和色彩與雜誌感肌理",
+    },
+    textureText: {
+      en: "Palette Weave brings color into natural woven surfaces with a refined, fashion-inspired sensibility. From blush and coral to seafoam and indigo tones, the series is designed for boutique apartments, modern residences, and interiors that seek warmth, personality, and quiet elegance.",
+      zh: "Palette Weave 將色彩注入天然編織表面，以細膩而時尚的語彙呈現空間個性。從桃紅、珊瑚紅到藍綠與靛藍色調，適合精品公寓、現代住宅與追求溫度、個性及柔和優雅的室內空間。",
+    },
+    textureImage: "/images/textures/palette-weave-texture.jpg",
+    spaceBoard: "/images/spaces/palette-weave-space-board.jpg",
+    products: Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/products/palette-weave/palette-weave-${String(i + 1).padStart(
+          2,
+          "0"
+        )}.jpg`
+    ),
+  },
+};
+
+export default function CollectionPage() {
+  const params = useParams();
+  const slug = params.slug as keyof typeof collectionData;
+
+  const [lang, setLang] = useState<"en" | "zh">("en");
+  const [scrolled, setScrolled] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+useEffect(() => {
+  const onScroll = () => setScrolled(window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll);
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
+  const [storyPage, setStoryPage] = useState(0);
+
+  const storyTotal = 4;
+  
+
+  const item = collectionData[slug];
+
+  const nextStory = () => {
+    setStoryPage((current) => Math.min(current + 1, storyTotal - 1));
+  };
+
+  const prevStory = () => {
+    setStoryPage((current) => Math.max(current - 1, 0));
+  };
+
+  if (!item) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#f4efe7]">
+        <h1 className="font-serif text-5xl">Collection not found</h1>
+      </main>
+    );
+  }
+
+  return (
+  <main className="min-h-screen bg-[#f4efe7] text-stone-900">
+    <Navbar
+
+  navCollections={lang === "en" ? "Collections" : "系列產品"}
+  navInspiration={lang === "en" ? "Inspiration" : "靈感案例"}
+  navContact={lang === "en" ? "Contact" : "聯絡我們"}
+  scrolled={scrolled}
+  menuOpen={menuOpen}
+  setMenuOpen={setMenuOpen}
+  onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
+/>
+    
+
+    
+
+
+      {/* COLLECTION STORY SLIDER */}
+<section className="relative min-h-screen overflow-hidden bg-[#f4efe7]">
+  {storyPage > 0 && (
+    <button
+      onClick={prevStory}
+      className="
+absolute
+left-6
+top-1/2
+z-50
+-translate-y-1/2
+text-[72px]
+font-extralight
+leading-none
+text-white/70
+transition-all
+duration-500
+ease-out
+hover:scale-105
+hover:text-white
+md:left-10
+"
+style={{
+  border: "none",
+  background: "transparent",
+  cursor: "pointer",
+  textShadow:
+    "0 0 4px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.35)",
+}}
+    >
+      ‹
+    </button>
+  )}
+
+  <button
+    onClick={() => {
+      if (storyPage === storyTotal - 1) {
+        setStoryPage(0);
+      } else {
+        nextStory();
+      }
+    }}
+    className="
+absolute
+right-6
+top-1/2
+z-50
+-translate-y-1/2
+text-[72px]
+font-extralight
+leading-none
+text-white/70
+transition-all
+duration-500
+ease-out
+hover:scale-105
+hover:text-white
+md:right-10
+"
+style={{
+  border: "none",
+  background: "transparent",
+  cursor: "pointer",
+  textShadow:
+    "0 0 4px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.35)",
+}}
+  >
+    ›
+  </button>
+
+  <button
+    className="animate-bounce"
+    onClick={() => {
+      document
+        .getElementById("product-gallery")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }}
+    style={{
+      position: "absolute",
+      left: "50%",
+      bottom: "28px",
+      transform: "translateX(-50%)",
+      zIndex: 60,
+      border: "none",
+      background: "transparent",
+      color: "#ffffff",
+      fontSize: "34px",
+      fontWeight: 200,
+      cursor: "pointer",
+      textShadow:
+        "0 0 4px rgba(0,0,0,0.60), 0 2px 8px rgba(0,0,0,0.35)",
+    }}
+  >
+    ﹀
+  </button>
+
+        {/* PAGE 01 / HERO */}
+        {storyPage === 0 && (
+          <section
+            className="relative flex min-h-screen items-end bg-cover bg-center px-8 pb-24 pt-32 text-white lg:px-20 lg:pb-32"
+            style={{
+              backgroundImage: `url('/images/heroes/${slug}-hero.jpg')`,
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-black/20" />
+
+            <div className="relative z-10 max-w-3xl animate-[fadeUp_0.9s_ease-out_forwards]">
+              <p className="mb-6 text-sm uppercase tracking-[0.3em] text-white/60">
+                {lang === "en" ? "Collection" : "產品系列"}
+              </p>
+
+              <h1 className="font-serif text-6xl leading-none lg:text-8xl">
+                {item.title[lang]}
+              </h1>
+
+              <p className="mt-10 max-w-2xl text-2xl leading-10 text-white/75">
+                {item.subtitle[lang]}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* PAGE 02 + PAGE 03 + PAGE 04 / COLLECTION STORY SLIDER */}
+{storyPage >= 1 && (
+  <div className="relative min-h-screen overflow-hidden bg-[#f4efe7]">
+    <div
+      className="flex min-h-screen transition-transform duration-1000 ease-out"
+      style={{
+        transform: `translateX(-${(storyPage - 1) * 100}%)`,
+      }}
+    >
+      {/* PAGE 02 / STORY TEXT ON HERO */}
+      <section
+        className="relative flex min-h-screen w-full shrink-0 items-end bg-cover bg-center px-8 pb-24 pt-32 text-white lg:px-20 lg:pb-32"
+        style={{
+          backgroundImage: `url('/images/heroes/${slug}-hero.jpg')`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/35" />
+
+        <div className="relative z-10 max-w-3xl animate-[fadeUp_0.9s_ease-out_forwards]">
+          <p className="mb-6 text-sm uppercase tracking-[0.3em] text-white/60">
+            {lang === "en" ? "Texture Story" : "材質敘事"}
+          </p>
+
+          <h2 className="font-serif text-5xl leading-tight lg:text-7xl">
+            {item.textureTitle[lang]}
+          </h2>
+
+          <p className="mt-10 max-w-2xl text-xl leading-9 text-white/75">
+            {item.textureText[lang]}
+          </p>
+        </div>
+      </section>
+
+      {/* PAGE 03 / TEXTURE DETAIL */}
+      <section className="min-h-screen w-full shrink-0 bg-[#f4efe7] px-8 py-0">
+        <div className="mx-auto w-full">
+          <img
+            src={item.textureImage}
+            alt={`${item.title.en} texture detail`}
+            className="block h-auto w-full"
+          />
+        </div>
+      </section>
+
+      {/* PAGE 04 / LOOKBOOK BOARD */}
+      <section className="flex min-h-screen w-full shrink-0 items-center justify-center overflow-hidden bg-[#f4efe7]">
+        <img
+          src={item.spaceBoard}
+          alt={`${item.title.en} lookbook`}
+          className="h-screen w-screen object-contain"
+        />
+      </section>
+    </div>
+  </div>
+)}
+
+      </section>
+      {/* PRODUCT GALLERY */}
+<section
+  id="product-gallery"
+  className="bg-[#f4efe7] px-8 py-20 lg:px-20"
+>
+  <div className="mb-10 flex items-end justify-between">
+    <div>
+      <p className="mb-4 text-sm uppercase tracking-[0.25em] text-stone-500">
+        {lang === "en" ? "Product Gallery" : "產品樣品"}
+      </p>
+
+      <h2 className="font-serif text-4xl leading-tight lg:text-5xl">
+        {lang === "en"
+          ? `Explore ${item.title.en} Samples`
+          : `探索 ${item.title.zh} 樣品`}
+      </h2>
+    </div>
+
+    <p className="hidden text-xs uppercase tracking-[0.22em] text-stone-400 lg:block">
+      12 Textures
+    </p>
+  </div>
+
+  <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+    {item.products.map((image, index) => (
+      <div key={`${image}-${index}`} className="group">
+        <div className="overflow-hidden bg-[#eee7dd]">
+          <img
+            src={image}
+            alt={`${item.title.en} sample ${index + 1}`}
+            className="aspect-[3/4] w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.02] group-hover:brightness-[1.015]"
+          />
+        </div>
+
+        <div className="mt-4 flex items-center justify-between border-b border-stone-300/50 pb-3">
+          <p className="text-xs uppercase tracking-[0.18em] text-stone-700">
+            {`${item.title.en.split(" ")[0]} ${String(index + 1).padStart(
+              2,
+              "0"
+            )}`}
+          </p>
+
+          <span className="text-xs text-stone-400">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+      {/* SAMPLE CTA */}
+<section
+  className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20"
+>
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: "url('/images/contact/contact-bg.jpg')" }}
+  />
+  <div className="absolute inset-0 bg-[#e9ddcd]/35" />
+
+  <div className="relative z-10">
+    <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p className="mb-4 text-sm uppercase tracking-[0.25em] text-[#8a7965]">
+          {lang === "en" ? "Sample Request" : "樣品申請"}
+        </p>
+
+        <h2 className="font-serif text-5xl leading-tight text-[#2d241c]">
+          {lang === "en"
+            ? `Experience ${item.title.en} in Person`
+            : `親手感受 ${item.title.zh}`}
+        </h2>
+      </div>
+
+      <a
+        href="/#contact-info"
+        className="inline-flex h-14 w-[280px] items-center justify-center border border-[#2d241c]/40 bg-[#2d241c] text-xs uppercase tracking-[0.24em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+      >
+        {lang === "en" ? "Request Sample" : "申請樣品"}
+      </a>
+    </div>
+  </div>
+</section>
+    </main>
+  );
+}
