@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/collections/totem-weave`,
+      url: `${baseUrl}/collections/totem-grain`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
