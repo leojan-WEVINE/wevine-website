@@ -10,44 +10,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-
     {
       url: `${baseUrl}/collections/atelier-weave`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/collections/timber-trace`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/collections/drift-weave`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
       url: `${baseUrl}/collections/totem-weave`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
-
     {
-      url: `${baseUrl}/collections/serene-twill`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-
-    {
-      url: `${baseUrl}/collections/linear-weave`,
+      url: `${baseUrl}/collections/palette-weave`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
