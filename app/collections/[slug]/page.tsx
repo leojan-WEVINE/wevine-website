@@ -23,6 +23,13 @@ const collectionData = {
     },
     textureImage: "/images/textures/atelier-weave-texture.jpg",
     spaceBoard: "/images/spaces/atelier-weave-space-board.jpg",
+    specifications: {
+  width: '91.4 cm (36")',
+  backing: "Paper Backing",
+  application: "Interior Wallcovering",
+  maintenance:
+    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
+},
     products: Array.from(
       { length: 16 },
       (_, i) =>
@@ -49,6 +56,13 @@ const collectionData = {
     },
     textureImage: "/images/textures/timber-trace-texture.jpg",
     spaceBoard: "/images/spaces/timber-trace-space-board.jpg",
+    specifications: {
+  width: '91.4 cm (36")',
+  backing: "Paper Backing",
+  application: "Interior Wallcovering",
+  maintenance:
+    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
+},
     products: Array.from(
       { length: 16 },
       (_, i) =>
@@ -75,6 +89,13 @@ const collectionData = {
     },
     textureImage: "/images/textures/drift-weave-texture.jpg",
     spaceBoard: "/images/spaces/drift-weave-space-board.jpg",
+    specifications: {
+  width: '91.4 cm (36")',
+  backing: "Paper Backing",
+  application: "Interior Wallcovering",
+  maintenance:
+    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
+},
     products: Array.from(
       { length: 16 },
       (_, i) =>
@@ -101,6 +122,13 @@ const collectionData = {
     },
     textureImage: "/images/textures/totem-grain-texture.jpg",
     spaceBoard: "/images/spaces/totem-grain-space-board.jpg",
+    specifications: {
+  width: '91.4 cm (36")',
+  backing: "Paper Backing",
+  application: "Interior Wallcovering",
+  maintenance:
+    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
+},
     products: Array.from(
       { length: 16 },
       (_, i) =>
@@ -127,6 +155,13 @@ const collectionData = {
     },
     textureImage: "/images/textures/palette-weave-texture.jpg",
     spaceBoard: "/images/spaces/palette-weave-space-board.jpg",
+    specifications: {
+  width: '91.4 cm (36")',
+  backing: "Paper Backing",
+  application: "Interior Wallcovering",
+  maintenance:
+    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
+},
     products: Array.from(
       { length: 16 },
       (_, i) =>
@@ -143,7 +178,8 @@ export default function CollectionPage() {
   const slug = params.slug as keyof typeof collectionData;
 
   const [lang, setLang] = useState<"en" | "zh">("en");
-  const [scrolled, setScrolled] = useState(true);
+const [langReady, setLangReady] = useState(false);
+const [scrolled, setScrolled] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [zoomImage, setZoomImage] = useState<string | null>(null);
@@ -159,20 +195,18 @@ useEffect(() => {
 useEffect(() => {
   const savedLang = localStorage.getItem("wevine-lang");
 
-  if (
-    savedLang === "en" ||
-    savedLang === "zh"
-  ) {
+  if (savedLang === "en" || savedLang === "zh") {
     setLang(savedLang);
   }
+
+  setLangReady(true);
 }, []);
 
 useEffect(() => {
-  localStorage.setItem(
-    "wevine-lang",
-    lang
-  );
-}, [lang]);
+  if (!langReady) return;
+
+  localStorage.setItem("wevine-lang", lang);
+}, [lang, langReady]);
 
   const [storyPage, setStoryPage] = useState(0);
 
@@ -421,9 +455,7 @@ style={{
       </h2>
     </div>
 
-    <p className="hidden text-xs uppercase tracking-[0.22em] text-stone-400 lg:block">
-      12 Textures
-    </p>
+  
   </div>
 
   <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -447,37 +479,97 @@ style={{
   </div>
 </section>
 
-      {/* SAMPLE CTA */}
-<section
-  className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20"
->
+ {/* Specification + SAMPLE CTA */}
+<section className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20">
   <div
     className="absolute inset-0 bg-cover bg-center"
     style={{ backgroundImage: "url('/images/contact/contact-bg.jpg')" }}
   />
-  <div className="absolute inset-0 bg-[#e9ddcd]/35" />
+  <div className="absolute inset-0 bg-[#e9ddcd]/45" />
 
-  <div className="relative z-10">
-    <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-      <div>
-        <p className="mb-4 text-sm uppercase tracking-[0.25em] text-[#8a7965]">
-          {lang === "en" ? "Sample Request" : "樣品申請"}
-        </p>
+  <div className="relative z-10 flex flex-col gap-10 lg:flex-row">
+    {/* LEFT: SPECIFICATION */}
+    <div className="w-full border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[60%] lg:p-10">
+      <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
+        {lang === "en" ? "Specification" : "規格資訊"}
+      </p>
 
-        <h2 className="font-serif text-5xl leading-tight text-[#2d241c]">
-          {lang === "en"
-            ? `Experience ${item.title.en} in Person`
-            : `親手感受 ${item.title.zh}`}
-        </h2>
+      <h2 className="mb-12 min-h-[140px] font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
+  {item.title[lang]}
+</h2>
+
+      <div className="grid gap-y-8 border-t border-[#c7b8a5]/70 pt-10 sm:grid-cols-2 sm:gap-x-12">
+        <div>
+          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+            {lang === "en" ? "Width" : "門幅"}
+          </p>
+          <p className="text-2xl text-black">
+            {item.specifications.width}
+          </p>
+        </div>
+
+        <div>
+          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+            {lang === "en" ? "Backing" : "底材"}
+          </p>
+          <p className="text-2xl text-black">
+  {lang === "en"
+    ? item.specifications.backing
+    : "高級紙質"}
+</p>
+        </div>
+
+        <div>
+          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+            {lang === "en" ? "Application" : "適用範圍"}
+          </p>
+          <p className="text-2xl text-black">
+            {lang === "en"
+              ? item.specifications.application
+              : "室內壁面裝飾材料"}
+          </p>
+        </div>
+
+        <div>
+          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+            {lang === "en" ? "Maintenance" : "保養方式"}
+          </p>
+          <p className="text-2xl text-black">
+            {lang === "en"
+              ? item.specifications.maintenance
+              : "使用柔軟且不具磨蝕性的布料輕拭表面，以去除灰塵與污漬。"}
+          </p>
+        </div>
       </div>
-
-      <a
-        href="/#contact-info"
-        className="inline-flex h-14 w-[280px] items-center justify-center border border-[#2d241c]/40 bg-[#2d241c] text-xs uppercase tracking-[0.24em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
-      >
-        {lang === "en" ? "Request Sample" : "申請樣品"}
-      </a>
     </div>
+
+    {/* RIGHT: SAMPLE REQUEST */}
+<div className="flex min-h-[420px] w-full flex-col border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[40%] lg:p-10">
+  <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
+    {lang === "en" ? "Sample Request" : "樣品申請"}
+  </p>
+
+  <h2 className="mb-12 min-h-[140px] font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
+    {lang === "en"
+      ? `Experience ${item.title.en} In Person`
+      : `親手感受 ${item.title.zh}`}
+  </h2>
+
+  <p className="text-2xl leading-10 text-black">
+    {lang === "en"
+      ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
+      : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
+  </p>
+
+  <div className="mt-auto pt-12">
+    <a
+      href="/#contact-info"
+      className="inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-sm uppercase tracking-[0.20em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+    >
+      {lang === "en" ? "Request Sample" : "申請樣品"}
+    </a>
+  </div>
+</div>
   </div>
 </section>
     </main>
