@@ -485,92 +485,90 @@ style={{
   />
   <div className="absolute inset-0 bg-[#f5efe7]/85" />
 
-  <div className="relative z-10 flex flex-col gap-10 lg:flex-row">
-    {/* LEFT: SPECIFICATION */}
-    <div className="w-full p-8 lg:w-[60%] lg:p-10">
+  <div className="relative z-10 grid gap-16 lg:grid-cols-[60%_40%]">
+    {/* LEFT */}
+    <div className="p-8 lg:p-10">
       <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
         {lang === "en" ? "Specification" : "規格資訊"}
       </p>
 
-      <h2 className="mb-8 text-[2rem] font-light leading-tight text-[#2d241c]">
+      <h2 className="min-h-[72px] text-[2rem] font-light leading-tight text-[#2d241c]">
         {item.title[lang]}
       </h2>
 
-      <div className="mt-12 grid gap-y-8 border-t border-[#c7b8a5]/70 pt-8 sm:grid-cols-2 sm:gap-x-12">
-        <div>
-          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
-  {lang === "en" ? "Width" : "門幅"}
-</p>
+      <div className="mt-10 border-t border-[#c7b8a5]/70 pt-8">
+        <div className="grid gap-y-8 sm:grid-cols-2 sm:gap-x-12">
+          <div>
+            <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+              {lang === "en" ? "Width" : "門幅"}
+            </p>
+            <p className="text-2xl text-black">{item.specifications.width}</p>
+          </div>
 
-<p className="text-2xl text-black">
-  {item.specifications.width}
-</p>
-        </div>
+          <div>
+            <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+              {lang === "en" ? "Backing" : "底材"}
+            </p>
+            <p className="text-2xl text-black">
+              {lang === "en" ? item.specifications.backing : "高級紙質"}
+            </p>
+          </div>
 
-        <div>
-          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
-            {lang === "en" ? "Backing" : "底材"}
-          </p>
-          <p className="text-2xl text-black">
-            {lang === "en" ? item.specifications.backing : "高級紙質"}
-          </p>
-        </div>
+          <div>
+            <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+              {lang === "en" ? "Application" : "適用範圍"}
+            </p>
+            <p className="text-2xl text-black">
+              {lang === "en"
+                ? item.specifications.application
+                : "室內壁面裝飾材料"}
+            </p>
+          </div>
 
-        <div>
-          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
-            {lang === "en" ? "Application" : "適用範圍"}
-          </p>
-          <p className="text-2xl text-black">
-            {lang === "en"
-              ? item.specifications.application
-              : "室內壁面裝飾材料"}
-          </p>
-        </div>
-
-        <div>
-          <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
-            {lang === "en" ? "Maintenance" : "保養方式"}
-          </p>
-          <p className="text-2xl text-black">
-            {lang === "en"
-              ? item.specifications.maintenance
-              : "使用柔軟且不具磨蝕性的布料輕拭表面，以去除灰塵與污漬。"}
-          </p>
+          <div>
+            <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
+              {lang === "en" ? "Maintenance" : "保養方式"}
+            </p>
+            <p className="text-2xl text-black">
+              {lang === "en"
+                ? item.specifications.maintenance
+                : "使用柔軟且不具磨蝕性的布料輕拭表面，以去除灰塵與污漬。"}
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
-    {/* RIGHT: SAMPLE REQUEST */}
-    <div className="flex min-h-[420px] w-full flex-col p-8 lg:w-[40%] lg:p-10">
+    {/* RIGHT */}
+    <div className="flex flex-col p-8 lg:p-10">
       <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
         {lang === "en" ? "Sample Request" : "樣品申請"}
       </p>
 
-      <h2 className="mb-8 min-h-[96px] text-[2rem] font-light leading-tight text-[#2d241c]">
+      <h2 className="min-h-[72px] text-[2rem] font-light leading-tight text-[#2d241c]">
         {lang === "en"
-  ? `Experience ${item.title.en}`
-  : `親手感受 ${item.title.zh}`}
+          ? `Experience ${item.title.en}`
+          : `親手感受 ${item.title.zh}`}
       </h2>
 
-      <p className="mt-16 border-t border-[#c7b8a5]/70 pt-8 text-2xl leading-9 text-black">
-        {lang === "en"
-          ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
-          : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
-      </p>
+      <div className="mt-10 border-t border-[#c7b8a5]/70 pt-8">
+        <p className="text-2xl leading-9 text-black">
+          {lang === "en"
+            ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
+            : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
+        </p>
 
-      <div className="pt-10">
-  <a
-    href="/#contact-info"
-    className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
-  >
-    {lang === "en" ? "Request Samples" : "申請樣品"}
-  </a>
-</div>
+        <a
+          href="/#contact-info"
+          className="mt-10 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+        >
+          {lang === "en" ? "Request Samples" : "申請樣品"}
+        </a>
+      </div>
     </div>
   </div>
 
-  {/* Footer Logo */}
-  <div className="relative z-10 mt-10 flex items-center justify-end gap-6">
+  <div className="relative z-10 mt-12 flex items-center justify-end gap-6">
     <img
       src="/images/brand/wevine-lockup-black.svg"
       alt="WEVINE"
