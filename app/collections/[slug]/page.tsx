@@ -155,6 +155,25 @@ useEffect(() => {
   window.addEventListener("scroll", onScroll);
   return () => window.removeEventListener("scroll", onScroll);
 }, []);
+
+useEffect(() => {
+  const savedLang = localStorage.getItem("wevine-lang");
+
+  if (
+    savedLang === "en" ||
+    savedLang === "zh"
+  ) {
+    setLang(savedLang);
+  }
+}, []);
+
+useEffect(() => {
+  localStorage.setItem(
+    "wevine-lang",
+    lang
+  );
+}, [lang]);
+
   const [storyPage, setStoryPage] = useState(0);
 
   const storyTotal = 4;
