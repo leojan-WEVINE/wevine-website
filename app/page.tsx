@@ -89,10 +89,27 @@ const collections = [
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "zh">("en");
-  const [scrolled, setScrolled] = useState(false);
+const [langReady, setLangReady] = useState(false);
+const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [sampleFormOpen, setSampleFormOpen] = useState(false);
+
+  useEffect(() => {
+  const savedLang = localStorage.getItem("wevine-lang");
+
+  if (savedLang === "en" || savedLang === "zh") {
+    setLang(savedLang);
+  }
+
+  setLangReady(true);
+}, []);
+
+useEffect(() => {
+  if (!langReady) return;
+
+  localStorage.setItem("wevine-lang", lang);
+}, [lang, langReady]);
 
 const inspirationSlides = [
   {
