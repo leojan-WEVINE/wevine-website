@@ -487,12 +487,12 @@ style={{
 
   <div className="relative z-10 flex flex-col gap-10 lg:flex-row">
     {/* LEFT: SPECIFICATION */}
-    <div className="w-full border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[60%] lg:p-10">
+    <div className="w-full p-8 lg:w-[60%] lg:p-10">
       <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
         {lang === "en" ? "Specification" : "規格資訊"}
       </p>
 
-      <h2 className="mb-12 min-h-[160px] text-[2rem] font-light leading-tight text-[#2d241c]">
+      <h2 className="mb-8 text-[2rem] font-light leading-tight text-[#2d241c]">
         {item.title[lang]}
       </h2>
 
@@ -541,12 +541,12 @@ style={{
     </div>
 
     {/* RIGHT: SAMPLE REQUEST */}
-    <div className="flex min-h-[420px] w-full flex-col border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[40%] lg:p-10">
+    <div className="flex min-h-[420px] w-full flex-col p-8 lg:w-[40%] lg:p-10">
       <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
         {lang === "en" ? "Sample Request" : "樣品申請"}
       </p>
 
-      <h2 className="mb-12 min-h-[160px] text-[2rem] font-light leading-tight text-[#2d241c]">
+      <h2 className="mb-8 text-[2rem] font-light leading-tight text-[#2d241c]">
         {lang === "en"
   ? `Experience ${item.title.en}`
   : `親手感受 ${item.title.zh}`}
