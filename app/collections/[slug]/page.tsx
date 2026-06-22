@@ -159,6 +159,16 @@ useEffect(() => {
 
   const item = collectionData[slug];
 
+  const collectionCodeMap = {
+  "atelier-weave": "AW",
+  "timber-trace": "TT",
+  "drift-weave": "DW",
+  "totem-grain": "TG",
+  "palette-weave": "PW",
+} as const;
+
+const collectionCode = collectionCodeMap[slug];
+
   const nextStory = () => {
     setStoryPage((current) => Math.min(current + 1, storyTotal - 1));
   };
@@ -405,18 +415,11 @@ style={{
           />
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-b border-stone-300/50 pb-3">
-          <p className="text-xs uppercase tracking-[0.18em] text-stone-700">
-            {`${item.title.en.split(" ")[0]} ${String(index + 1).padStart(
-              2,
-              "0"
-            )}`}
-          </p>
-
-          <span className="text-xs text-stone-400">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
+       <div className="mt-4 border-b border-stone-300/50 pb-3">
+  <p className="text-xs uppercase tracking-[0.22em] text-stone-700">
+    {`${collectionCode}-${String(index + 1).padStart(2, "0")}`}
+  </p>
+</div>
       </div>
     ))}
   </div>
