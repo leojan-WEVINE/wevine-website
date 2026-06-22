@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 
 
@@ -444,15 +445,12 @@ style={{
 >
   <div className="mb-10 flex items-end justify-between">
     <div>
-      <p className="mb-4 text-sm uppercase tracking-[0.25em] text-stone-500">
-        {lang === "en" ? "Product Gallery" : "產品樣品"}
-      </p>
 
-      <h2 className="font-serif text-4xl leading-tight lg:text-5xl">
-        {lang === "en"
-          ? `Explore ${item.title.en} Samples`
-          : `探索 ${item.title.zh} 樣品`}
-      </h2>
+      <h2 className="font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
+  {lang === "en"
+    ? `Explore ${item.title.en}`
+    : `探索 ${item.title.zh}`}
+</h2>
     </div>
 
   
@@ -479,13 +477,13 @@ style={{
   </div>
 </section>
 
- {/* Specification + SAMPLE CTA */}
+{/* Specification + SAMPLE CTA */}
 <section className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20">
   <div
     className="absolute inset-0 bg-cover bg-center"
     style={{ backgroundImage: "url('/images/contact/contact-bg.jpg')" }}
   />
-  <div className="absolute inset-0 bg-[#e9ddcd]/45" />
+  <div className="absolute inset-0 bg-[#f5efe7]/85" />
 
   <div className="relative z-10 flex flex-col gap-10 lg:flex-row">
     {/* LEFT: SPECIFICATION */}
@@ -494,18 +492,19 @@ style={{
         {lang === "en" ? "Specification" : "規格資訊"}
       </p>
 
-      <h2 className="mb-12 min-h-[140px] font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
-  {item.title[lang]}
-</h2>
+      <h2 className="mb-12 min-h-[160px] text-[2rem] font-light leading-tight text-[#2d241c]">
+        {item.title[lang]}
+      </h2>
 
-      <div className="grid gap-y-8 border-t border-[#c7b8a5]/70 pt-10 sm:grid-cols-2 sm:gap-x-12">
+      <div className="mt-12 grid gap-y-8 border-t border-[#c7b8a5]/70 pt-8 sm:grid-cols-2 sm:gap-x-12">
         <div>
           <p className="mb-2 text-base uppercase tracking-[0.18em] text-black">
-            {lang === "en" ? "Width" : "門幅"}
-          </p>
-          <p className="text-2xl text-black">
-            {item.specifications.width}
-          </p>
+  {lang === "en" ? "Width" : "門幅"}
+</p>
+
+<p className="text-2xl text-black">
+  {item.specifications.width}
+</p>
         </div>
 
         <div>
@@ -513,10 +512,8 @@ style={{
             {lang === "en" ? "Backing" : "底材"}
           </p>
           <p className="text-2xl text-black">
-  {lang === "en"
-    ? item.specifications.backing
-    : "高級紙質"}
-</p>
+            {lang === "en" ? item.specifications.backing : "高級紙質"}
+          </p>
         </div>
 
         <div>
@@ -544,32 +541,45 @@ style={{
     </div>
 
     {/* RIGHT: SAMPLE REQUEST */}
-<div className="flex min-h-[420px] w-full flex-col border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[40%] lg:p-10">
-  <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
-    {lang === "en" ? "Sample Request" : "樣品申請"}
-  </p>
+    <div className="flex min-h-[420px] w-full flex-col border border-white/35 bg-[#f6f2ec]/55 p-8 backdrop-blur-[3px] lg:w-[40%] lg:p-10">
+      <p className="mb-5 text-base uppercase tracking-[0.25em] text-[#2d241c]">
+        {lang === "en" ? "Sample Request" : "樣品申請"}
+      </p>
 
-  <h2 className="mb-12 min-h-[140px] font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
-    {lang === "en"
-      ? `Experience ${item.title.en} In Person`
-      : `親手感受 ${item.title.zh}`}
-  </h2>
+      <h2 className="mb-12 min-h-[160px] text-[2rem] font-light leading-tight text-[#2d241c]">
+        {lang === "en"
+  ? `Experience ${item.title.en}`
+  : `親手感受 ${item.title.zh}`}
+      </h2>
 
-  <p className="text-2xl leading-10 text-black">
-    {lang === "en"
-      ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
-      : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
-  </p>
+      <p className="mt-12 border-t border-[#c7b8a5]/70 pt-8 text-2xl leading-9 text-black">
+        {lang === "en"
+          ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
+          : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
+      </p>
 
-  <div className="mt-auto pt-12">
-    <a
-      href="/#contact-info"
-      className="inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-sm uppercase tracking-[0.20em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
-    >
-      {lang === "en" ? "Request Sample" : "申請樣品"}
-    </a>
-  </div>
+      <div className="pt-10">
+  <a
+    href="/#contact-info"
+    className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+  >
+    {lang === "en" ? "Request Samples" : "申請樣品"}
+  </a>
 </div>
+    </div>
+  </div>
+
+  {/* Footer Logo */}
+  <div className="relative z-10 mt-10 flex items-center justify-end gap-6">
+    <img
+      src="/images/brand/wevine-lockup-black.svg"
+      alt="WEVINE"
+      className="h-8 w-auto"
+    />
+
+    <p className="text-sm tracking-[0.08em] text-[#2d241c]">
+      © 2026 WEVINE. All rights reserved.
+    </p>
   </div>
 </section>
     </main>

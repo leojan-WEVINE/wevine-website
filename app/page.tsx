@@ -397,9 +397,9 @@ return (
   <div className="relative z-10">
   <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr]">
     <div>
-      <p className="mb-6 text-sm uppercase tracking-[0.28em] text-[#5f5040]">
-        {t.contactLabel}
-      </p>
+      <p className="mb-6 text-base uppercase tracking-[0.25em] text-[#2d241c]">
+  {t.contactLabel}
+</p>
 
       <h2 className="max-w-3xl text-5xl font-light leading-[1.02] tracking-[-0.04em] lg:text-7xl">
         {lang === "en" ? (
@@ -421,14 +421,14 @@ return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:pt-10">
   <div className="flex min-h-[520px] flex-col border border-white/35 bg-[#f6f2ec]/50 p-8 backdrop-blur-[3px] transition-all duration-500 hover:-translate-y-[3px] hover:border-white/70 hover:bg-[#f6f2ec]/65 hover:shadow-[0_24px_60px_rgba(45,36,28,0.10)]">
   <div className="inline-block">
-  <p className="text-xs uppercase tracking-[0.24em] text-[#564737]">
-    {lang === "en" ? "Request Sample" : "索取樣品"}
-  </p>
+  <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
+  {lang === "en" ? "Request Samples" : "申請樣品"}
+</p>
 
   <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
 </div>
 
-<h3 className="mt-8 text-4xl font-light leading-tight text-[#2d241c]">
+<h3 className="mt-8 text-[2rem] font-light leading-tight text-[#2d241c]">
     {lang === "en" ? (
       <>
         Experience Texture
@@ -444,20 +444,20 @@ return (
     )}
   </h3>
 
-  <p className="mt-6 max-w-md text-lg leading-8 text-[#6f6254]">
+  <p className="mt-6 max-w-md text-xl leading-9 text-[#2d241c]">
     {lang === "en"
       ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
-      : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
+      : "申請精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
   </p>
 
   <div className="mt-auto flex justify-center pt-24">
     <button
-      type="button"
-      onClick={() => setSampleFormOpen(true)}
-      className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-xs uppercase tracking-[0.24em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
-    >
-      {lang === "en" ? "Request Samples" : "索取樣品"}
-    </button>
+  type="button"
+  onClick={() => setSampleFormOpen(true)}
+  className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+>
+  {lang === "en" ? "Request Samples" : "申請樣品"}
+</button>
   </div>
 
 </div>
@@ -465,9 +465,9 @@ return (
 <div className="min-h-[520px] border border-white/35 bg-[#f6f2ec]/50 p-8 backdrop-blur-[3px] transition-all duration-500 hover:-translate-y-[3px] hover:border-white/70 hover:bg-[#f6f2ec]/65 hover:shadow-[0_24px_60px_rgba(45,36,28,0.10)]">
 
   <div className="inline-block">
-    <p className="text-xs uppercase tracking-[0.24em] text-[#564737]">
-      {lang === "en" ? "Contact" : "聯絡我們"}
-    </p>
+    <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
+  {lang === "en" ? "Contact" : "聯絡我們"}
+</p>
 
     <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
   </div>
@@ -476,11 +476,11 @@ return (
     {lang === "en" ? "Project Inquiry" : "專案洽詢"}
   </h3>
 
-  <p className="mt-6 text-lg leading-8 text-[#6f6254]">
-    {lang === "en"
-      ? "Residential, hospitality, restaurant and commercial projects."
-      : "高端住宅、精品飯店、餐飲空間、商業空間及客製化設計專案合作。"}
-  </p>
+  <p className="mt-6 text-xl leading-9 text-[#2d241c]">
+  {lang === "en"
+    ? "Residential, hospitality, restaurant and commercial projects."
+    : "高端住宅、精品飯店、餐飲空間、商業空間及客製化設計專案合作。"}
+</p>
 
   <div className="mt-10 space-y-5">
     <a
@@ -503,9 +503,9 @@ return (
   className="h-8 w-auto"
 />
 
-  <p className="text-xs uppercase tracking-[0.25em] text-[#7a6a58]">
-    © 2026
-  </p>
+  <p className="text-sm tracking-[0.08em] text-[#2d241c]">
+  © 2026 WEVINE. All rights reserved.
+</p>
 </div>
 </div>
 
@@ -528,7 +528,7 @@ return (
       </button>
 
       <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
-        {lang === "en" ? "Sample Request" : "索取樣品"}
+        {lang === "en" ? "Sample Request" : "申請樣品"}
       </p>
 
       <h3 className="mb-8 pr-10 text-4xl font-light leading-tight text-[#2d241c]">
@@ -537,7 +537,7 @@ return (
           : "告訴我們您的空間計畫"}
       </h3>
 
-      <SampleRequestForm />
+      <SampleRequestForm lang={lang} />
     </div>
   </div>
 )}

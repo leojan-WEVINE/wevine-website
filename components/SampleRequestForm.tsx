@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 
-export default function SampleRequestForm() {
+type SampleRequestFormProps = {
+  lang: "en" | "zh";
+};
+
+export default function SampleRequestForm({
+  lang,
+}: SampleRequestFormProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -40,15 +46,17 @@ export default function SampleRequestForm() {
   return (
     <div className="flex min-h-[360px] flex-col items-center justify-center border border-[#d8cec0]/70 bg-[#fbf8f3]/55 px-8 text-center">
       <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
-        Request Received
+        {lang === "en" ? "Request Received" : "申請已送出"}
       </p>
 
       <h3 className="text-4xl font-light text-[#2d241c]">
-        Thank You
+        {lang === "en" ? "Thank You" : "謝謝您"}
       </h3>
 
       <p className="mt-5 max-w-sm text-base leading-7 text-[#6f6254]">
-        We have received your sample request and will be in touch shortly.
+        {lang === "en"
+          ? "We have received your sample request and will be in touch shortly."
+          : "我們已收到您的樣品申請，將盡快與您聯繫。"}
       </p>
     </div>
   );
@@ -115,7 +123,13 @@ return (
       disabled={loading}
       className="mt-2 inline-flex h-14 w-full items-center justify-center bg-[#2d241c] text-xs uppercase tracking-[0.24em] text-[#f6f2ec] transition hover:bg-[#6b5744] disabled:cursor-not-allowed disabled:opacity-60"
     >
-      {loading ? "Sending..." : "Request Samples"}
+      {loading
+  ? lang === "en"
+    ? "Sending..."
+    : "送出中..."
+  : lang === "en"
+    ? "Request Samples"
+    : "申請樣品"}
     </button>
   </form>
 );
