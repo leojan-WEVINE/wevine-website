@@ -552,7 +552,7 @@ style={{
   : `親手感受 ${item.title.zh}`}
       </h2>
 
-      <p className="mt-12 border-t border-[#c7b8a5]/70 pt-8 text-2xl leading-9 text-black">
+      <p className="mt-16 border-t border-[#c7b8a5]/70 pt-8 text-2xl leading-9 text-black">
         {lang === "en"
           ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
           : "索取精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
