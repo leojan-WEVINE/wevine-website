@@ -24,7 +24,7 @@ const collectionData = {
     textureImage: "/images/textures/atelier-weave-texture.jpg",
     spaceBoard: "/images/spaces/atelier-weave-space-board.jpg",
     products: Array.from(
-      { length: 12 },
+      { length: 16 },
       (_, i) =>
         `/images/products/atelier-weave/atelier-weave-${String(i + 1).padStart(
           2,
@@ -50,7 +50,7 @@ const collectionData = {
     textureImage: "/images/textures/timber-trace-texture.jpg",
     spaceBoard: "/images/spaces/timber-trace-space-board.jpg",
     products: Array.from(
-      { length: 12 },
+      { length: 16 },
       (_, i) =>
         `/images/products/timber-trace/timber-trace-${String(i + 1).padStart(
           2,
@@ -76,7 +76,7 @@ const collectionData = {
     textureImage: "/images/textures/drift-weave-texture.jpg",
     spaceBoard: "/images/spaces/drift-weave-space-board.jpg",
     products: Array.from(
-      { length: 12 },
+      { length: 16 },
       (_, i) =>
         `/images/products/drift-weave/drift-weave-${String(i + 1).padStart(
           2,
@@ -102,7 +102,7 @@ const collectionData = {
     textureImage: "/images/textures/totem-grain-texture.jpg",
     spaceBoard: "/images/spaces/totem-grain-space-board.jpg",
     products: Array.from(
-      { length: 12 },
+      { length: 16 },
       (_, i) =>
         `/images/products/totem-grain/totem-grain-${String(i + 1).padStart(
           2,
@@ -128,7 +128,7 @@ const collectionData = {
     textureImage: "/images/textures/palette-weave-texture.jpg",
     spaceBoard: "/images/spaces/palette-weave-space-board.jpg",
     products: Array.from(
-      { length: 12 },
+      { length: 16 },
       (_, i) =>
         `/images/products/palette-weave/palette-weave-${String(i + 1).padStart(
           2,
@@ -145,6 +145,9 @@ export default function CollectionPage() {
   const [lang, setLang] = useState<"en" | "zh">("en");
   const [scrolled, setScrolled] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [zoomImage, setZoomImage] = useState<string | null>(null);
+const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 
 useEffect(() => {
   const onScroll = () => setScrolled(window.scrollY > 40);
@@ -411,7 +414,7 @@ style={{
           <img
             src={image}
             alt={`${item.title.en} sample ${index + 1}`}
-            className="aspect-[3/4] w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.02] group-hover:brightness-[1.015]"
+            className="aspect-[3/4] w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.1] group-hover:brightness-[1.015]"
           />
         </div>
 
