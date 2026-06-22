@@ -546,7 +546,7 @@ style={{
         {lang === "en" ? "Sample Request" : "樣品申請"}
       </p>
 
-      <h2 className="mb-8 text-[2rem] font-light leading-tight text-[#2d241c]">
+      <h2 className="mb-8 min-h-[96px] text-[2rem] font-light leading-tight text-[#2d241c]">
         {lang === "en"
   ? `Experience ${item.title.en}`
   : `親手感受 ${item.title.zh}`}
