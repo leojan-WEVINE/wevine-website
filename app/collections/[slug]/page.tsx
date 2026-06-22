@@ -414,7 +414,7 @@ style={{
           <img
             src={image}
             alt={`${item.title.en} sample ${index + 1}`}
-            className="aspect-[3/4] w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.1] group-hover:brightness-[1.015]"
+            className="aspect-[3/4] w-full object-cover transition-all duration-[1600ms] ease-out group-hover:scale-[1.15] group-hover:brightness-[1.03]"
           />
         </div>
 
