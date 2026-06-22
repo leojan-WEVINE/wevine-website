@@ -419,7 +419,7 @@ return (
     </div>
 
     <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:pt-10">
-  <div className="flex min-h-[520px] flex-col border border-white/20 bg-[#f6f2ec]/30 p-8 backdrop-blur-[1px] transition-all duration-500 hover:-translate-y-[3px] hover:border-white/45 hover:bg-[#f6f2ec]/42 hover:shadow-[0_24px_60px_rgba(45,36,28,0.08)]">
+  <div className="flex min-h-[520px] flex-col p-8">
   <div className="inline-block">
   <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
   {lang === "en" ? "Request Samples" : "申請樣品"}
@@ -450,7 +450,7 @@ return (
       : "申請精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
   </p>
 
-  <div className="mt-auto flex justify-center pt-24">
+  <div className="mt-8">
     <button
   type="button"
   onClick={() => setSampleFormOpen(true)}
@@ -462,7 +462,7 @@ return (
 
 </div>
 
-<div className="min-h-[520px] border border-white/20 bg-[#f6f2ec]/30 p-8 backdrop-blur-[1px] transition-all duration-500 hover:-translate-y-[3px] hover:border-white/45 hover:bg-[#f6f2ec]/42 hover:shadow-[0_24px_60px_rgba(45,36,28,0.08)]">
+<div className="min-h-[520px] p-8">
 
   <div className="inline-block">
     <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">

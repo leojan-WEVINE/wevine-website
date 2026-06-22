@@ -446,7 +446,7 @@ style={{
   <div className="mb-10 flex items-end justify-between">
     <div>
 
-      <h2 className="font-serif text-5xl leading-tight text-[#2d241c] lg:text-6xl">
+      <h2 className="text-4xl font-light leading-tight text-[#2d241c] lg:text-5xl">
   {lang === "en"
     ? `Explore ${item.title.en}`
     : `探索 ${item.title.zh}`}
