@@ -94,6 +94,13 @@ const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [sampleFormOpen, setSampleFormOpen] = useState(false);
+  useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("sampleRequest") === "1") {
+    setSampleFormOpen(true);
+  }
+}, []);
 
   useEffect(() => {
   const savedLang = localStorage.getItem("wevine-lang");

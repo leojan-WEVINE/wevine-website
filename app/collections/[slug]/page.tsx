@@ -185,6 +185,13 @@ const [scrolled, setScrolled] = useState(true);
 
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+const [selectedProductIndex, setSelectedProductIndex] = useState<number | null>(null);
+const [sampleCart, setSampleCart] = useState<string[]>([]);
+useEffect(() => {
+  if (sampleCart.length > 0) {
+    localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
+  }
+}, [sampleCart]);
 
 useEffect(() => {
   const onScroll = () => setScrolled(window.scrollY > 40);
@@ -225,6 +232,36 @@ useEffect(() => {
 } as const;
 
 const collectionCode = collectionCodeMap[slug];
+const selectedProduct =
+  selectedProductIndex !== null ? item.products[selectedProductIndex] : null;
+
+const selectedProductCode =
+  selectedProductIndex !== null
+    ? `${collectionCode}-${String(selectedProductIndex + 1).padStart(2, "0")}`
+    : "";
+
+const prevProduct = () => {
+  setSelectedProductIndex((current) => {
+    if (current === null) return null;
+    return current === 0 ? item.products.length - 1 : current - 1;
+  });
+};
+
+const nextProduct = () => {
+  setSelectedProductIndex((current) => {
+    if (current === null) return null;
+    return current === item.products.length - 1 ? 0 : current + 1;
+  });
+};
+
+const addSampleToCart = () => {
+  if (!selectedProductCode) return;
+
+  setSampleCart((current) => {
+    if (current.includes(selectedProductCode)) return current;
+    return [...current, selectedProductCode];
+  });
+};
 
   const nextStory = () => {
     setStoryPage((current) => Math.min(current + 1, storyTotal - 1));
@@ -443,27 +480,33 @@ style={{
   id="product-gallery"
   className="bg-[#f4efe7] px-8 py-20 lg:px-20"
 >
-  <div className="mb-10 flex items-end justify-between">
-    <div>
+  <div className="mb-14 flex items-end justify-between">
+  <div>
+    <p className="mb-4 text-sm uppercase tracking-[0.25em] text-stone-500">
+      {lang === "en" ? "Design Selection" : "精選款式"}
+    </p>
 
-      <h2 className="text-4xl font-light leading-tight text-[#2d241c] lg:text-5xl">
-  {lang === "en"
-    ? `Explore ${item.title.en}`
-    : `探索 ${item.title.zh}`}
-</h2>
-    </div>
-
-  
+    <h2 className="text-[2.5rem] font-light leading-tight text-[#2d241c] lg:text-[3.5rem]">
+      {lang === "en"
+        ? `Explore ${item.title.en}`
+        : `探索${item.title.zh}`}
+    </h2>
   </div>
+</div>
 
-  <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+  <div className="grid gap-x-12 gap-y-20 sm:grid-cols-2 lg:grid-cols-4">
     {item.products.map((image, index) => (
-      <div key={`${image}-${index}`} className="group">
+      <button
+  key={`${image}-${index}`}
+  type="button"
+  onClick={() => setSelectedProductIndex(index)}
+  className="group block w-full text-left"
+>
         <div className="overflow-hidden bg-[#eee7dd]">
           <img
             src={image}
             alt={`${item.title.en} sample ${index + 1}`}
-            className="aspect-[3/4] w-full object-cover transition-all duration-[1600ms] ease-out group-hover:scale-[1.15] group-hover:brightness-[1.03]"
+            className="aspect-[3/4] w-full object-cover transition-all duration-[1600ms] ease-out group-hover:scale-[1.05] group-hover:brightness-[1.03]"
           />
         </div>
 
@@ -472,13 +515,16 @@ style={{
     {`${collectionCode}-${String(index + 1).padStart(2, "0")}`}
   </p>
 </div>
-      </div>
+      </button>
     ))}
   </div>
 </section>
 
 {/* Specification + SAMPLE CTA */}
-<section className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20">
+<section
+  id="sample-request-section"
+  className="relative overflow-hidden px-8 py-20 text-[#2d241c] lg:px-20"
+>
   <div
     className="absolute inset-0 bg-cover bg-center"
     style={{ backgroundImage: "url('/images/contact/contact-bg.jpg')" }}
@@ -580,6 +626,121 @@ style={{
     </p>
   </div>
 </section>
+
+{selectedProduct && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 px-5 py-8 backdrop-blur-sm">
+    <button
+      type="button"
+      onClick={() => setSelectedProductIndex(null)}
+      className="absolute inset-0"
+      aria-label="Close product preview"
+    />
+
+    <div className="relative z-10 grid max-h-[90vh] w-full max-w-6xl overflow-hidden bg-[#f4efe7] shadow-2xl lg:grid-cols-[68%_32%]">
+      <div className="flex max-h-[90vh] items-center justify-center bg-[#e8dfd3]">
+        <img
+          src={selectedProduct}
+          alt={selectedProductCode}
+          className="max-h-[90vh] w-full object-contain"
+        />
+      </div>
+
+      <div className="flex flex-col justify-between p-8 lg:p-10">
+        <div>
+          <button
+            type="button"
+            onClick={() => setSelectedProductIndex(null)}
+            className="absolute right-6 top-5 text-3xl font-light text-[#6f6254] transition hover:text-[#2d241c]"
+            aria-label="Close product preview"
+          >
+            ×
+          </button>
+
+          <p className="mb-5 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
+            {item.title[lang]}
+          </p>
+
+          <h3 className="text-5xl font-light leading-none text-[#2d241c]">
+            {selectedProductCode}
+          </h3>
+
+          <p className="mt-8 text-lg leading-8 text-[#6f6254]">
+            {lang === "en"
+              ? "Explore texture, tone and woven detail before requesting samples for your project."
+              : "放大檢視材質、色澤與編織細節，為您的空間專案挑選合適樣品。"}
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <div className="mb-8 flex items-center justify-between border-t border-[#c7b8a5]/70 pt-6">
+            <button
+  type="button"
+  onClick={prevProduct}
+  className="text-[48px] font-extralight leading-none text-[#6f6254] transition hover:scale-105 hover:text-[#2d241c]"
+>
+  ‹
+</button>
+
+<button
+  type="button"
+  onClick={nextProduct}
+  className="text-[48px] font-extralight leading-none text-[#6f6254] transition hover:scale-105 hover:text-[#2d241c]"
+>
+  ›
+</button>
+          </div>
+
+          <button
+  type="button"
+  onClick={addSampleToCart}
+  className="inline-flex h-14 w-full items-center justify-center bg-[#2d241c] text-sm uppercase tracking-[0.16em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+>
+  {sampleCart.includes(selectedProductCode)
+    ? lang === "en"
+      ? "Added to Sample Request"
+      : "已加入樣品申請"
+    : lang === "en"
+      ? "Add to Sample Request"
+      : "加入樣品申請"}
+</button>
+
+{sampleCart.length > 0 && (
+  <div className="mt-6 border-t border-[#c7b8a5]/70 pt-5">
+    <p className="mb-3 text-xs uppercase tracking-[0.22em] text-[#8a7965]">
+      {lang === "en" ? "Selected Samples" : "已選樣品"}
+    </p>
+
+    <div className="flex flex-wrap gap-2">
+      {sampleCart.map((code) => (
+        <span
+          key={code}
+          className="border border-[#c7b8a5] px-3 py-1 text-sm tracking-[0.12em] text-[#2d241c]"
+        >
+          {code}
+        </span>
+      ))}
+    </div>
+  </div>
+)}
+
+{sampleCart.length > 0 && (
+  <button
+    type="button"
+    onClick={() => {
+      
+      window.location.href = "/?sampleRequest=1#contact-info";
+    }}
+    className="mt-6 inline-flex h-12 w-full items-center justify-center border border-[#2d241c] text-xs uppercase tracking-[0.16em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
+  >
+    {lang === "en" ? "Continue to Request Form" : "前往樣品申請表"}
+  </button>
+)}
+
+        </div>
+      </div>
+    </div>
+  </div>
+)}
     </main>
   );
 }
