@@ -5,8 +5,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    const { name, email, company, country, projectType, message } =
-      await req.json();
+    const {
+      name,
+      email,
+      company,
+      country,
+      projectType,
+      message,
+      selectedSamples,
+    } = await req.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -14,6 +21,11 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    const samplesText =
+      Array.isArray(selectedSamples) && selectedSamples.length > 0
+        ? selectedSamples.join(", ")
+        : "-";
 
     const { error } = await resend.emails.send({
       from: "WEVINE Website <hello@wevinewallcoverings.com>",
@@ -27,6 +39,9 @@ export async function POST(req: Request) {
         <p><strong>Company:</strong> ${company || "-"}</p>
         <p><strong>Country:</strong> ${country || "-"}</p>
         <p><strong>Project Type:</strong> ${projectType || "-"}</p>
+
+        <p><strong>Selected Samples:</strong><br />${samplesText}</p>
+
         <hr />
         <p>${message || "-"}</p>
       `,
@@ -38,9 +53,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch {
-    return NextResponse.json(
-      { error: "Server error." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Server error." }, { status: 500 });
   }
 }
