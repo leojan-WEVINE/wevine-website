@@ -199,6 +199,9 @@ const [sampleCart, setSampleCart] = useState<string[]>(() => {
     return [];
   }
 });
+
+const sampleCount = sampleCart.length;
+
 useEffect(() => {
   if (sampleCart.length > 0) {
     localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
@@ -532,6 +535,41 @@ style={{
   </div>
 </section>
 
+{sampleCount > 0 && (
+  <button
+    type="button"
+    onClick={() => {
+      window.location.href =
+        "/?sampleRequest=1&samples=" +
+        encodeURIComponent(sampleCart.join(","));
+    }}
+    className="
+      fixed
+      bottom-6
+      right-6
+      z-[90]
+      flex
+      items-center
+      gap-3
+      bg-[#2d241c]
+      px-5
+      py-3
+      text-[#f6f2ec]
+      shadow-xl
+      transition
+      hover:bg-[#6b5744]
+    "
+  >
+    <span className="text-xs uppercase tracking-[0.18em]">
+      Samples
+    </span>
+
+    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-[#f6f2ec] px-2 text-xs text-[#2d241c]">
+      {sampleCount}
+    </span>
+  </button>
+)}
+
 {/* Specification + SAMPLE CTA */}
 <section
   id="sample-request-section"
@@ -755,6 +793,7 @@ window.location.href = `/?sampleRequest=1&samples=${samplesQuery}#contact-info`;
     </div>
   </div>
 )}
+
     </main>
   );
 }

@@ -110,10 +110,12 @@ export default function SampleRequestForm({ lang }: SampleRequestFormProps) {
         JSON.stringify(updatedSamples)
       );
     }}
-    className="inline-flex items-center gap-2 border border-[#bcae9b] bg-[#faf7f2] px-3 py-1 text-sm tracking-[0.12em] text-[#2d241c] transition hover:border-[#2d241c]"
+    className="group inline-flex items-center gap-2 border border-[#bcae9b] bg-[#faf7f2] px-3 py-1 text-sm tracking-[0.12em] text-[#2d241c] transition hover:border-[#2d241c]"
   >
     {code}
-    <span className="text-[#8a7965]">×</span>
+    <span className="text-[#8a7965] transition group-hover:text-[#2d241c]">
+  ×
+</span>
   </button>
 ))}
           </div>
