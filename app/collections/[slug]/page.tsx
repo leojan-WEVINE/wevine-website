@@ -186,7 +186,19 @@ const [scrolled, setScrolled] = useState(true);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 const [selectedProductIndex, setSelectedProductIndex] = useState<number | null>(null);
-const [sampleCart, setSampleCart] = useState<string[]>([]);
+const [sampleCart, setSampleCart] = useState<string[]>(() => {
+  if (typeof window === "undefined") return [];
+
+  const savedSamples = localStorage.getItem("wevine-sample-cart");
+
+  if (!savedSamples) return [];
+
+  try {
+    return JSON.parse(savedSamples);
+  } catch {
+    return [];
+  }
+});
 useEffect(() => {
   if (sampleCart.length > 0) {
     localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
@@ -727,8 +739,10 @@ style={{
   <button
     type="button"
     onClick={() => {
+      localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
       
-      window.location.href = "/?sampleRequest=1#contact-info";
+      const samplesQuery = encodeURIComponent(sampleCart.join(","));
+window.location.href = `/?sampleRequest=1&samples=${samplesQuery}#contact-info`;
     }}
     className="mt-6 inline-flex h-12 w-full items-center justify-center border border-[#2d241c] text-xs uppercase tracking-[0.16em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
   >
