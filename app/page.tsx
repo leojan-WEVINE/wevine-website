@@ -95,11 +95,29 @@ const [scrolled, setScrolled] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [sampleFormOpen, setSampleFormOpen] = useState(false);
   useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
+  const openSampleForm = () => {
+    const params = new URLSearchParams(window.location.search);
 
-  if (params.get("sampleRequest") === "1") {
-    setSampleFormOpen(true);
-  }
+    if (params.get("sampleRequest") === "1") {
+      setSampleFormOpen(true);
+
+      setTimeout(() => {
+        document
+          .getElementById("contact-info")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  };
+
+  openSampleForm();
+
+  window.addEventListener("popstate", openSampleForm);
+  window.addEventListener("hashchange", openSampleForm);
+
+  return () => {
+    window.removeEventListener("popstate", openSampleForm);
+    window.removeEventListener("hashchange", openSampleForm);
+  };
 }, []);
 
   useEffect(() => {
@@ -131,6 +149,22 @@ descZh:
   "天然纖維，\n細緻紋理，\n歷久彌新的空間美學。",
     image: "/images/inspiration/material-story.jpg",
   },
+
+  {
+  titleEn: "Craftsmanship",
+  titleZh: "編織工藝",
+
+  subtitleEn: "The Craft Behind Every Weave",
+  subtitleZh: "每一道紋理，都始於工藝。",
+
+  descEn:
+    "Natural fibres are carefully selected and woven through a process that balances tradition, material integrity and modern performance.",
+
+  descZh:
+    "從天然纖維的甄選到細緻的編織製程，每一款壁布皆承載著材料本質與職人技藝，展現真實而歷久彌新的質感。",
+
+  image: "/images/inspiration/craftsmanship.jpg",
+},
 
   {
     titleEn: "Residential",
@@ -396,9 +430,11 @@ return (
   className="relative scroll-mt-48 overflow-hidden px-8 py-16 text-[#2d241c] lg:px-20 lg:py-20"
 >
   <div
-    className="absolute inset-0 bg-cover bg-center"
-    style={{ backgroundImage: "url('/images/contact/contact-bg.jpg')" }}
-  />
+  className="absolute inset-0 bg-cover bg-center opacity-70"
+  style={{
+    backgroundImage: "url('/images/contact/contact-bg.jpg')",
+  }}
+/>
   <div className="absolute inset-0 bg-[#e9ddcd]/35" />
 
   <div className="relative z-10">

@@ -91,35 +91,41 @@ export default function SampleRequestForm({ lang }: SampleRequestFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {selectedSamples.length > 0 && (
-        <div className="border border-[#d8cec0] bg-[#f4efe7] p-4">
-          <p className="mb-3 text-xs uppercase tracking-[0.22em] text-[#8a7965]">
-            {lang === "en" ? "Selected Samples" : "已選樣品"}
-          </p>
+        <div className="mb-8 border-b border-[#c7b8a5]/70 pb-6">
+  <p className="mb-3 text-xs uppercase tracking-[0.22em] text-[#8a7965]">
+    {lang === "en"
+      ? `Selected Samples (${selectedSamples.length})`
+      : `已選樣品（${selectedSamples.length}）`}
+  </p>
 
-          <div className="flex flex-wrap gap-2">
-            {selectedSamples.map((code) => (
-  <button
-    key={code}
-    type="button"
-    onClick={() => {
-      const updatedSamples = selectedSamples.filter((item) => item !== code);
+  <div className="flex flex-wrap gap-2">
+    {selectedSamples.map((code) => (
+      <button
+        key={code}
+        type="button"
+        onClick={() => {
+          const updatedSamples = selectedSamples.filter(
+            (item) => item !== code
+          );
 
-      setSelectedSamples(updatedSamples);
-      localStorage.setItem(
-        "wevine-sample-cart",
-        JSON.stringify(updatedSamples)
-      );
-    }}
-    className="group inline-flex items-center gap-2 border border-[#bcae9b] bg-[#faf7f2] px-3 py-1 text-sm tracking-[0.12em] text-[#2d241c] transition hover:border-[#2d241c]"
-  >
-    {code}
-    <span className="text-[#8a7965] transition group-hover:text-[#2d241c]">
-  ×
-</span>
-  </button>
-))}
-          </div>
-        </div>
+          setSelectedSamples(updatedSamples);
+
+          localStorage.setItem(
+            "wevine-sample-cart",
+            JSON.stringify(updatedSamples)
+          );
+        }}
+        className="group inline-flex items-center gap-2 border border-[#bcae9b] px-3.5 py-1.5 text-xs uppercase tracking-[0.14em] text-[#2d241c] transition hover:border-[#2d241c]"
+      >
+        <span>{code}</span>
+
+        <span className="text-[11px] font-light opacity-45 transition group-hover:opacity-100">
+          ×
+        </span>
+      </button>
+    ))}
+  </div>
+</div>
       )}
 
       <div className="grid gap-4 md:grid-cols-2">

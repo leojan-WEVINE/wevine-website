@@ -687,13 +687,29 @@ style={{
     />
 
     <div className="relative z-10 grid max-h-[90vh] w-full max-w-6xl overflow-hidden bg-[#f4efe7] shadow-2xl lg:grid-cols-[68%_32%]">
-      <div className="flex max-h-[90vh] items-center justify-center bg-[#e8dfd3]">
-        <img
-          src={selectedProduct}
-          alt={selectedProductCode}
-          className="max-h-[90vh] w-full object-contain"
-        />
-      </div>
+      <div className="relative flex max-h-[90vh] items-center justify-center bg-[#e8dfd3]">
+  <img
+    src={selectedProduct}
+    alt={selectedProductCode}
+    className="max-h-[90vh] w-full object-contain"
+  />
+
+  <button
+    type="button"
+    onClick={prevProduct}
+    className="absolute left-4 top-1/2 -translate-y-1/2 text-[60px] font-extralight leading-none text-[#8a7965] transition hover:scale-105 hover:text-[#2d241c]"
+  >
+    ‹
+  </button>
+
+  <button
+    type="button"
+    onClick={nextProduct}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-[60px] font-extralight leading-none text-[#8a7965] transition hover:scale-105 hover:text-[#2d241c]"
+  >
+    ›
+  </button>
+</div>
 
       <div className="flex flex-col justify-between p-8 lg:p-10">
         <div>
@@ -722,25 +738,51 @@ style={{
         </div>
 
         <div className="mt-10">
-          <div className="mb-8 flex items-center justify-between border-t border-[#c7b8a5]/70 pt-6">
-            <button
-  type="button"
-  onClick={prevProduct}
-  className="text-[48px] font-extralight leading-none text-[#6f6254] transition hover:scale-105 hover:text-[#2d241c]"
->
-  ‹
-</button>
+          
+
+{sampleCart.length > 0 && (
+  <div className="mb-8 border-y border-[#c7b8a5]/70 py-5">
+    <p className="mb-3 text-xs uppercase tracking-[0.22em] text-[#8a7965]">
+  {lang === "en"
+    ? `Selected Samples (${sampleCart.length})`
+    : `已選樣品（${sampleCart.length}）`}
+</p>
+
+    <div className="mb-5 flex flex-wrap gap-2">
+      {sampleCart.map((code) => (
+  <button
+    key={code}
+    type="button"
+    onClick={() =>
+      setSampleCart(sampleCart.filter((item) => item !== code))
+    }
+    className="group inline-flex items-center gap-2 border border-[#c7b8a5] px-3.5 py-1.5 text-xs uppercase tracking-[0.14em] text-[#2d241c] transition hover:border-[#2d241c]"
+  >
+    <span>{code}</span>
+
+    <span className="text-[11px] font-light opacity-45 transition group-hover:opacity-100">
+      ×
+    </span>
+  </button>
+))}
+    </div>
+
+    <button
+      type="button"
+      onClick={() => {
+        localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
+
+        const samplesQuery = encodeURIComponent(sampleCart.join(","));
+        window.location.href = `/?sampleRequest=1&samples=${samplesQuery}#contact-info`;
+      }}
+      className="inline-flex h-12 w-full items-center justify-center border border-[#2d241c] text-xs uppercase tracking-[0.16em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
+    >
+      {lang === "en" ? "Continue to Request Form" : "前往樣品申請表"}
+    </button>
+  </div>
+)}
 
 <button
-  type="button"
-  onClick={nextProduct}
-  className="text-[48px] font-extralight leading-none text-[#6f6254] transition hover:scale-105 hover:text-[#2d241c]"
->
-  ›
-</button>
-          </div>
-
-          <button
   type="button"
   onClick={addSampleToCart}
   className="inline-flex h-14 w-full items-center justify-center bg-[#2d241c] text-sm uppercase tracking-[0.16em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
@@ -753,40 +795,6 @@ style={{
       ? "Add to Sample Request"
       : "加入樣品申請"}
 </button>
-
-{sampleCart.length > 0 && (
-  <div className="mt-6 border-t border-[#c7b8a5]/70 pt-5">
-    <p className="mb-3 text-xs uppercase tracking-[0.22em] text-[#8a7965]">
-      {lang === "en" ? "Selected Samples" : "已選樣品"}
-    </p>
-
-    <div className="flex flex-wrap gap-2">
-      {sampleCart.map((code) => (
-        <span
-          key={code}
-          className="border border-[#c7b8a5] px-3 py-1 text-sm tracking-[0.12em] text-[#2d241c]"
-        >
-          {code}
-        </span>
-      ))}
-    </div>
-  </div>
-)}
-
-{sampleCart.length > 0 && (
-  <button
-    type="button"
-    onClick={() => {
-      localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
-      
-      const samplesQuery = encodeURIComponent(sampleCart.join(","));
-window.location.href = `/?sampleRequest=1&samples=${samplesQuery}#contact-info`;
-    }}
-    className="mt-6 inline-flex h-12 w-full items-center justify-center border border-[#2d241c] text-xs uppercase tracking-[0.16em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
-  >
-    {lang === "en" ? "Continue to Request Form" : "前往樣品申請表"}
-  </button>
-)}
 
         </div>
       </div>
