@@ -45,7 +45,7 @@ export default function ProductGallery({
   <img
     src={image}
     alt={`${titleEn} sample ${index + 1}`}
-    className="h-[84%] w-[84%] object-contain transition-all duration-[900ms] ease-out group-hover:scale-[1.1] group-hover:brightness-[1.06]"
+    className="h-[84%] w-[84%] object-contain transition-all duration-[900ms] ease-out group-hover/lens:scale-[1.1] group-hover/lens:brightness-[1.06]"
   />
 </TextureLens>
 
