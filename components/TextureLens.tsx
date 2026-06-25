@@ -1,49 +1,81 @@
 import type { ReactNode } from "react";
+import { useRef } from "react";
 
 type TextureLensProps = {
   image: string;
   children: ReactNode;
 };
 
-export default function TextureLens({
-  image,
-  children,
-}: TextureLensProps) {
+export default function TextureLens({ image, children }: TextureLensProps) {
+  const frameRef = useRef<number | null>(null);
+
   return (
     <div
       className="group/lens relative flex aspect-[3/4] items-center justify-center overflow-hidden bg-[#f4efe7]"
       onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
+        if (frameRef.current !== null) return;
 
-        e.currentTarget.style.setProperty(
-          "--lens-x",
-          `${((e.clientX - rect.left) / rect.width) * 100}%`
-        );
+        const target = e.currentTarget;
+        const clientX = e.clientX;
+        const clientY = e.clientY;
 
-        e.currentTarget.style.setProperty(
-          "--lens-y",
-          `${((e.clientY - rect.top) / rect.height) * 100}%`
-        );
+        frameRef.current = requestAnimationFrame(() => {
+          const rect = target.getBoundingClientRect();
+
+          target.style.setProperty(
+            "--lens-x",
+            `${((clientX - rect.left) / rect.width) * 100}%`
+          );
+
+          target.style.setProperty(
+            "--lens-y",
+            `${((clientY - rect.top) / rect.height) * 100}%`
+          );
+
+          frameRef.current = null;
+        });
+      }}
+      onMouseLeave={() => {
+        if (frameRef.current !== null) {
+          cancelAnimationFrame(frameRef.current);
+          frameRef.current = null;
+        }
       }}
     >
       {children}
 
       <div
-        className="pointer-events-none absolute right-5 top-5 z-20 h-36 w-36 overflow-hidden rounded-md border border-white/70 bg-white/75 opacity-0 shadow-xl backdrop-blur-sm transition-all duration-300 group-hover/lens:opacity-100"
+        className="
+pointer-events-none
+absolute
+right-5
+top-5
+z-20
+h-40
+w-40
+overflow-hidden
+rounded-md
+border
+border-white/80
+bg-white/75
+shadow-2xl
+backdrop-blur-sm
+opacity-0
+scale-95
+transition-all
+duration-200
+ease-out
+group-hover/lens:opacity-100
+group-hover/lens:scale-100
+"
         style={{
           backgroundImage: `url(${image})`,
           backgroundSize: "550%",
-          backgroundPosition: "var(--lens-x) var(--lens-y)",
+          backgroundPosition: "var(--lens-x, 50%) var(--lens-y, 50%)",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute left-3 top-3 text-[9px] font-medium uppercase tracking-[0.32em] text-black/40">
-          DETAIL
-        </div>
-
-        <div className="absolute bottom-3 right-3 text-[9px] font-medium uppercase tracking-[0.24em] text-black/40">
-          MAGNIFIED
-        </div>
+        
       </div>
     </div>
   );
