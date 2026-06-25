@@ -32,7 +32,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 16 },
+      { length: 34 },
       (_, i) =>
         `/images/products/atelier-weave/atelier-weave-${String(i + 1).padStart(
           2,
@@ -65,7 +65,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 16 },
+      { length: 28 },
       (_, i) =>
         `/images/products/timber-trace/timber-trace-${String(i + 1).padStart(
           2,
@@ -131,7 +131,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 16 },
+      { length: 26 },
       (_, i) =>
         `/images/products/totem-grain/totem-grain-${String(i + 1).padStart(
           2,
@@ -164,7 +164,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 16 },
+      { length: 24 },
       (_, i) =>
         `/images/products/palette-weave/palette-weave-${String(i + 1).padStart(
           2,
@@ -408,30 +408,26 @@ style={{
   </button>
 
         {/* PAGE 01 / HERO */}
-        {storyPage === 0 && (
-          <section
-            className="relative flex min-h-screen items-end bg-cover bg-center px-8 pb-24 pt-32 text-white lg:px-20 lg:pb-32"
-            style={{
-              backgroundImage: `url('/images/heroes/${slug}-hero.jpg')`,
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-black/20" />
+{storyPage === 0 && (
+  <section
+    className="relative flex min-h-screen items-end bg-cover bg-center px-8 pb-24 pt-32 text-white lg:px-20 lg:pb-32"
+    style={{
+      backgroundImage: `url('/images/heroes/${slug}-hero.jpg')`,
+    }}
+  >
+    <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-black/20" />
 
-            <div className="relative z-10 max-w-3xl animate-[fadeUp_0.9s_ease-out_forwards]">
-              <p className="mb-6 text-sm uppercase tracking-[0.3em] text-white/60">
-                {lang === "en" ? "Collection" : "產品系列"}
-              </p>
+    <div className="relative z-10 max-w-3xl animate-[fadeUp_0.9s_ease-out_forwards]">
+      <h1 className="font-serif text-6xl leading-none lg:text-8xl">
+        {item.title[lang]}
+      </h1>
 
-              <h1 className="font-serif text-6xl leading-none lg:text-8xl">
-                {item.title[lang]}
-              </h1>
-
-              <p className="mt-10 max-w-2xl text-2xl leading-10 text-white/75">
-                {item.subtitle[lang]}
-              </p>
-            </div>
-          </section>
-        )}
+      <p className="mt-10 max-w-2xl text-2xl leading-10 text-white/75">
+        {item.subtitle[lang]}
+      </p>
+    </div>
+  </section>
+)}
 
         {/* PAGE 02 + PAGE 03 + PAGE 04 / COLLECTION STORY SLIDER */}
 {storyPage >= 1 && (
@@ -509,7 +505,7 @@ style={{
   </div>
 </div>
 
-  <div className="grid gap-x-12 gap-y-20 sm:grid-cols-2 lg:grid-cols-4">
+  <div className="grid gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
     {item.products.map((image, index) => (
       <button
   key={`${image}-${index}`}
@@ -517,15 +513,15 @@ style={{
   onClick={() => setSelectedProductIndex(index)}
   className="group block w-full text-left"
 >
-        <div className="overflow-hidden bg-[#eee7dd]">
-          <img
-            src={image}
-            alt={`${item.title.en} sample ${index + 1}`}
-            className="aspect-[3/4] w-full object-cover transition-all duration-[1600ms] ease-out group-hover:scale-[1.05] group-hover:brightness-[1.03]"
-          />
-        </div>
+        <div className="flex aspect-[3/4] items-center justify-center overflow-hidden bg-[#f4efe7] p-6">
+  <img
+    src={image}
+    alt={`${item.title.en} sample ${index + 1}`}
+    className="h-[86%] w-[86%] object-cover transition-all duration-[1600ms] ease-out group-hover:scale-[1.05] group-hover:brightness-[1.03]"
+  />
+</div>
 
-       <div className="mt-4 border-b border-stone-300/50 pb-3">
+       <div className="mt-2 border-b border-stone-300/50 pb-3">
   <p className="text-xs uppercase tracking-[0.22em] text-stone-700">
     {`${collectionCode}-${String(index + 1).padStart(2, "0")}`}
   </p>
@@ -687,12 +683,14 @@ style={{
     />
 
     <div className="relative z-10 grid max-h-[90vh] w-full max-w-6xl overflow-hidden bg-[#f4efe7] shadow-2xl lg:grid-cols-[68%_32%]">
-      <div className="relative flex max-h-[90vh] items-center justify-center bg-[#e8dfd3]">
-  <img
-    src={selectedProduct}
-    alt={selectedProductCode}
-    className="max-h-[90vh] w-full object-contain"
-  />
+<div className="relative flex max-h-[90vh] items-center justify-center bg-[#e8dfd3] px-14 py-10">
+  <div className="flex aspect-[4/5] h-[78vh] max-h-[760px] w-full max-w-[620px] items-center justify-center">
+    <img
+      src={selectedProduct}
+      alt={selectedProductCode}
+      className="h-full w-full object-contain"
+    />
+  </div>
 
   <button
     type="button"
@@ -711,7 +709,7 @@ style={{
   </button>
 </div>
 
-      <div className="flex flex-col justify-between p-8 lg:p-10">
+<div className="flex flex-col justify-between p-8 lg:p-10">
         <div>
           <button
             type="button"
