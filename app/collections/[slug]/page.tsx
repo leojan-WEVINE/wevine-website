@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
 import ProductModal from "@/components/ProductModal";
-
+import FloatingCollectionNav from "@/components/FloatingCollectionNav";
 
 
 const collectionData = {
@@ -188,6 +188,7 @@ const [scrolled, setScrolled] = useState(true);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 const [selectedProductIndex, setSelectedProductIndex] = useState<number | null>(null);
+const [showFloatingNav, setShowFloatingNav] = useState(false);
 
 const [sampleCart, setSampleCart] = useState<string[]>(() => {
   if (typeof window === "undefined") return [];
@@ -233,6 +234,21 @@ useEffect(() => {
 
   localStorage.setItem("wevine-lang", lang);
 }, [lang, langReady]);
+
+useEffect(() => {
+  const checkGalleryVisible = () => {
+    const gallery = document.getElementById("product-gallery");
+    if (!gallery) return;
+
+    const rect = gallery.getBoundingClientRect();
+    setShowFloatingNav(rect.top <= window.innerHeight * 0.45);
+  };
+
+  checkGalleryVisible();
+  window.addEventListener("scroll", checkGalleryVisible);
+
+  return () => window.removeEventListener("scroll", checkGalleryVisible);
+}, []);
 
   const [storyPage, setStoryPage] = useState(0);
 
@@ -308,6 +324,11 @@ const addSampleToCart = () => {
   menuOpen={menuOpen}
   setMenuOpen={setMenuOpen}
   onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
+/>
+<FloatingCollectionNav
+  currentSlug={slug}
+  visible={showFloatingNav}
+  lang={lang}
 />
     
 
