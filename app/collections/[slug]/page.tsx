@@ -219,12 +219,15 @@ useEffect(() => {
   return () => window.removeEventListener("scroll", onScroll);
 }, []);
 
+
+
 useEffect(() => {
   const savedLang = localStorage.getItem("wevine-lang");
 
   if (savedLang === "en" || savedLang === "zh") {
     setLang(savedLang);
   }
+
 
   setLangReady(true);
 }, []);
@@ -329,6 +332,10 @@ const addSampleToCart = () => {
   currentSlug={slug}
   visible={showFloatingNav}
   lang={lang}
+  sampleItems={sampleCart}
+  onRemoveSample={(code) =>
+    setSampleCart(sampleCart.filter((item) => item !== code))
+  }
 />
     
 
@@ -519,40 +526,6 @@ style={{
   onSelectProduct={setSelectedProductIndex}
 />
 
-{sampleCount > 0 && (
-  <button
-    type="button"
-    onClick={() => {
-      window.location.href =
-        "/?sampleRequest=1&samples=" +
-        encodeURIComponent(sampleCart.join(","));
-    }}
-    className="
-      fixed
-      bottom-6
-      right-6
-      z-[90]
-      flex
-      items-center
-      gap-3
-      bg-[#2d241c]
-      px-5
-      py-3
-      text-[#f6f2ec]
-      shadow-xl
-      transition
-      hover:bg-[#6b5744]
-    "
-  >
-    <span className="text-xs uppercase tracking-[0.18em]">
-      Samples
-    </span>
-
-    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-[#f6f2ec] px-2 text-xs text-[#2d241c]">
-      {sampleCount}
-    </span>
-  </button>
-)}
 
 {/* Specification + SAMPLE CTA */}
 <section
