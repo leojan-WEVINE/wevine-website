@@ -2,8 +2,17 @@ type ProductModalProps = {
   selectedProduct: string;
   selectedProductCode: string;
   collectionTitle: string;
+
+  patternEn: string;
+  patternZh: string;
+
+  atmosphereEn: string;
+  atmosphereZh: string;
+
   lang: "en" | "zh";
+
   sampleCart: string[];
+
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -15,6 +24,12 @@ export default function ProductModal({
   selectedProduct,
   selectedProductCode,
   collectionTitle,
+
+  patternEn,
+  patternZh,
+  atmosphereEn,
+  atmosphereZh,
+
   lang,
   sampleCart,
   onClose,
@@ -75,14 +90,18 @@ export default function ProductModal({
             </p>
 
             <h3 className="text-5xl font-light leading-none text-[#2d241c]">
-              {selectedProductCode}
-            </h3>
+  {selectedProductCode}
+</h3>
 
-            <p className="mt-8 text-lg leading-8 text-[#6f6254]">
-              {lang === "en"
-                ? "Explore texture, tone and woven detail before requesting samples for your project."
-                : "放大檢視材質、色澤與編織細節，為您的空間專案挑選合適樣品。"}
-            </p>
+            <div className="mt-8">
+  <p className="text-lg font-medium tracking-[0.08em] text-[#2d241c]">
+    {lang === "en" ? patternEn : patternZh}
+  </p>
+
+  <p className="mt-2 text-sm tracking-[0.16em] text-[#8a7965]">
+    {lang === "en" ? atmosphereEn : atmosphereZh}
+  </p>
+</div>
           </div>
 
           <div className="mt-10">

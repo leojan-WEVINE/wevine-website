@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
 import ProductModal from "@/components/ProductModal";
 import FloatingCollectionNav from "@/components/FloatingCollectionNav";
+import { productLanguage } from "@/lib/design-language/product-language";
 
 
 const collectionData = {
@@ -207,9 +208,12 @@ const [sampleCart, setSampleCart] = useState<string[]>(() => {
 const sampleCount = sampleCart.length;
 
 useEffect(() => {
-  if (sampleCart.length > 0) {
-    localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
+  if (sampleCart.length === 0) {
+    localStorage.removeItem("wevine-sample-cart");
+    return;
   }
+
+  localStorage.setItem("wevine-sample-cart", JSON.stringify(sampleCart));
 }, [sampleCart]);
 
 useEffect(() => {
@@ -639,6 +643,22 @@ style={{
     selectedProduct={selectedProduct}
     selectedProductCode={selectedProductCode}
     collectionTitle={item.title[lang]}
+    patternEn={
+  productLanguage[selectedProductCode as keyof typeof productLanguage]
+    ?.patternEn ?? ""
+}
+patternZh={
+  productLanguage[selectedProductCode as keyof typeof productLanguage]
+    ?.patternZh ?? ""
+}
+atmosphereEn={
+  productLanguage[selectedProductCode as keyof typeof productLanguage]
+    ?.atmosphereEn ?? ""
+}
+atmosphereZh={
+  productLanguage[selectedProductCode as keyof typeof productLanguage]
+    ?.atmosphereZh ?? ""
+}
     lang={lang}
     sampleCart={sampleCart}
     onClose={() => setSelectedProductIndex(null)}
