@@ -46,26 +46,37 @@ export default function SampleRequestForm({ lang }: SampleRequestFormProps) {
     setLoading(true);
 
     const response = await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify({
-        name: form.get("name"),
-        email: form.get("email"),
-        company: form.get("company"),
-        country: form.get("country"),
-        projectType: form.get("projectType"),
-        message: form.get("message"),
-        selectedSamples,
-      }),
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: form.get("name"),
+    email: form.get("email"),
+    company: form.get("company"),
+    country: form.get("country"),
+    projectType: form.get("projectType"),
+    message: form.get("message"),
+    samples: selectedSamples,
+    lang,
+  }),
+});
 
     setLoading(false);
 
-    if (response.ok) {
-      formElement.reset();
-      localStorage.removeItem("wevine-sample-cart");
-      setSelectedSamples([]);
-      setSuccess(true);
-    }
+if (!response.ok) {
+  alert(
+    lang === "en"
+      ? "Something went wrong. Please try again."
+      : "送出時發生錯誤，請稍後再試。"
+  );
+  return;
+}
+
+formElement.reset();
+localStorage.removeItem("wevine-sample-cart");
+setSelectedSamples([]);
+setSuccess(true);
   };
 
   if (success) {

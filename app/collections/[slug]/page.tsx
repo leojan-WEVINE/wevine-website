@@ -205,6 +205,8 @@ const [sampleCart, setSampleCart] = useState<string[]>(() => {
   }
 });
 
+const [toastMessage, setToastMessage] = useState("");
+
 const sampleCount = sampleCart.length;
 
 useEffect(() => {
@@ -296,11 +298,24 @@ const nextProduct = () => {
 };
 
 const addSampleToCart = () => {
+  console.log("selectedProductCode:", selectedProductCode);
+
   if (!selectedProductCode) return;
 
   setSampleCart((current) => {
     if (current.includes(selectedProductCode)) return current;
-    return [...current, selectedProductCode];
+
+    const updated = [...current, selectedProductCode];
+
+    localStorage.setItem("wevine-sample-cart", JSON.stringify(updated));
+
+    setToastMessage(selectedProductCode);
+
+setTimeout(() => {
+  setToastMessage("");
+}, 2200);
+
+    return updated;
   });
 };
 
@@ -331,6 +346,7 @@ const addSampleToCart = () => {
   menuOpen={menuOpen}
   setMenuOpen={setMenuOpen}
   onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
+  sampleCount={sampleCart.length}
 />
 <FloatingCollectionNav
   currentSlug={slug}
@@ -669,6 +685,19 @@ atmosphereZh={
       setSampleCart(sampleCart.filter((item) => item !== code))
     }
   />
+)}
+
+{toastMessage && (
+  <div className="fixed right-8 top-[140px] z-[200] animate-[toastIn_0.35s_ease-out,toastOut_0.4s_ease-in_1.8s_forwards] rounded-lg border border-white/30 bg-[#f6f2ec]/78 px-4 py-3 shadow-xl backdrop-blur-md">
+    <p className="flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] text-[#8a7965]">
+      <span className="text-[11px]">✓</span>
+      {lang === "en" ? "Sample Added" : "已加入樣品申請"}
+    </p>
+
+    <p className="mt-1 pl-[15px] text-[14px] font-light tracking-[0.06em] text-[#2d241c]">
+      {toastMessage}
+    </p>
+  </div>
 )}
 
     </main>

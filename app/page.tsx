@@ -239,6 +239,19 @@ const nextInspiration = () => {
   );
 };
 
+const [sampleCount, setSampleCount] = useState(0);
+useEffect(() => {
+  const savedSamples = localStorage.getItem("wevine-sample-cart");
+
+  if (!savedSamples) return;
+
+  try {
+    setSampleCount(JSON.parse(savedSamples).length);
+  } catch {
+    setSampleCount(0);
+  }
+}, []);
+
 const activeSlide =
   inspirationSlides[activeInspiration];
 
@@ -253,6 +266,7 @@ return (
   menuOpen={menuOpen}
   setMenuOpen={setMenuOpen}
   onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
+  sampleCount={sampleCount}
 />
 
       {/* HERO */}
