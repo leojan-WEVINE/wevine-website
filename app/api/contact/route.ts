@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 type ContactPayload = {
   name?: string;
   company?: string;
@@ -16,6 +14,25 @@ type ContactPayload = {
 
 export async function POST(request: Request) {
   try {
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const contactTo = process.env.CONTACT_TO;
+
+    if (!resendApiKey) {
+      return NextResponse.json(
+        { error: "Missing RESEND_API_KEY." },
+        { status: 500 }
+      );
+    }
+
+    if (!contactTo) {
+      return NextResponse.json(
+        { error: "Missing CONTACT_TO." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
+
     const body = (await request.json()) as ContactPayload;
 
     const {
@@ -39,38 +56,38 @@ export async function POST(request: Request) {
     const selectedSamples =
       samples.length > 0 ? samples.join(", ") : "No samples selected";
 
+    // 寄給 WEVINE
     await resend.emails.send({
       from: "WEVINE Website <hello@wevinewallcoverings.com>",
-      to: ["hello@wevinewallcoverings.com"],
+      to: [contactTo],
       replyTo: email,
       subject: `WEVINE Sample Request${name ? ` from ${name}` : ""}`,
       html: `
-        <div style="font-family: Arial, sans-serif; color: #2d241c; line-height: 1.6;">
-          <h2 style="font-weight: 400; letter-spacing: 0.08em;">
-            WEVINE Sample Request
-          </h2>
+        <div style="font-family:Arial,sans-serif;color:#2d241c;line-height:1.7">
+          <h2>WEVINE Sample Request</h2>
 
-          <hr style="border: none; border-top: 1px solid #d8cbbb; margin: 24px 0;" />
+          <hr>
 
           <p><strong>Name:</strong> ${name || "-"}</p>
           <p><strong>Company:</strong> ${company || "-"}</p>
           <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Country / Region:</strong> ${country || "-"}</p>
+          <p><strong>Country:</strong> ${country || "-"}</p>
           <p><strong>Project Type:</strong> ${projectType || "-"}</p>
 
-          <hr style="border: none; border-top: 1px solid #d8cbbb; margin: 24px 0;" />
+          <hr>
 
-          <p><strong>Selected Samples:</strong></p>
+          <p><strong>Selected Samples</strong></p>
           <p>${selectedSamples}</p>
 
-          <hr style="border: none; border-top: 1px solid #d8cbbb; margin: 24px 0;" />
+          <hr>
 
-          <p><strong>Message:</strong></p>
+          <p><strong>Message</strong></p>
           <p>${message || "-"}</p>
         </div>
       `,
     });
 
+    // 自動回覆客戶
     await resend.emails.send({
       from: "WEVINE <hello@wevinewallcoverings.com>",
       to: [email],
@@ -79,10 +96,8 @@ export async function POST(request: Request) {
           ? "我們已收到您的 WEVINE 樣品申請"
           : "We have received your WEVINE sample request",
       html: `
-        <div style="font-family: Arial, sans-serif; color: #2d241c; line-height: 1.7;">
-          <h2 style="font-weight: 400; letter-spacing: 0.08em;">
-            WEVINE
-          </h2>
+        <div style="font-family:Arial,sans-serif;color:#2d241c;line-height:1.7">
+          <h2>WEVINE</h2>
 
           <p>
             ${
@@ -100,18 +115,19 @@ export async function POST(request: Request) {
             }
           </p>
 
-          <p><strong>${lang === "zh" ? "已選樣品" : "Selected Samples"}:</strong></p>
+          <p><strong>${
+            lang === "zh" ? "已選樣品" : "Selected Samples"
+          }</strong></p>
+
           <p>${selectedSamples}</p>
 
-          <br />
+          <br>
 
-          <p>
-            ${
-              lang === "zh"
-                ? "WEVINE 團隊"
-                : "The WEVINE Team"
-            }
-          </p>
+          <p>${
+            lang === "zh"
+              ? "WEVINE 團隊"
+              : "The WEVINE Team"
+          }</p>
         </div>
       `,
     });
@@ -121,8 +137,12 @@ export async function POST(request: Request) {
     console.error("Contact API Error:", error);
 
     return NextResponse.json(
-      { error: "Failed to send request." },
-      { status: 500 }
+      {
+        error: "Failed to send request.",
+      },
+      {
+        status: 500,
+      }
     );
   }
 }
