@@ -22,8 +22,25 @@ export default function Navbar({
   sampleCount,
 }: NavbarProps) {
   const goToSampleRequest = () => {
-    window.location.href = "/?sampleRequest=1#contact-info";
-  };
+  const savedSamples = localStorage.getItem("wevine-sample-cart");
+
+  if (savedSamples) {
+    try {
+      const samples = JSON.parse(savedSamples);
+
+      if (samples.length > 0) {
+        const samplesQuery = encodeURIComponent(samples.join(","));
+        window.location.href = `/?sampleRequest=1&samples=${samplesQuery}#contact-info`;
+        return;
+      }
+    } catch {
+      window.location.href = "/?sampleRequest=1#contact-info";
+      return;
+    }
+  }
+
+  window.location.href = "/?sampleRequest=1#contact-info";
+};
 
   return (
     <>

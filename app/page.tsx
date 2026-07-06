@@ -241,15 +241,31 @@ const nextInspiration = () => {
 
 const [sampleCount, setSampleCount] = useState(0);
 useEffect(() => {
-  const savedSamples = localStorage.getItem("wevine-sample-cart");
+  const updateSampleCount = () => {
+    const savedSamples = localStorage.getItem("wevine-sample-cart");
 
-  if (!savedSamples) return;
+    if (!savedSamples) {
+      setSampleCount(0);
+      return;
+    }
 
-  try {
-    setSampleCount(JSON.parse(savedSamples).length);
-  } catch {
-    setSampleCount(0);
-  }
+    try {
+      const parsed = JSON.parse(savedSamples);
+      setSampleCount(Array.isArray(parsed) ? parsed.length : 0);
+    } catch {
+      setSampleCount(0);
+    }
+  };
+
+  updateSampleCount();
+
+  window.addEventListener("sample-cart-updated", updateSampleCount);
+  window.addEventListener("storage", updateSampleCount);
+
+  return () => {
+    window.removeEventListener("sample-cart-updated", updateSampleCount);
+    window.removeEventListener("storage", updateSampleCount);
+  };
 }, []);
 
 const activeSlide =

@@ -74,9 +74,15 @@ if (!response.ok) {
 }
 
 formElement.reset();
+
 localStorage.removeItem("wevine-sample-cart");
+
+window.dispatchEvent(new Event("sample-cart-updated"));
+
 setSelectedSamples([]);
 setSuccess(true);
+// 通知 Navbar 更新徽章
+window.dispatchEvent(new Event("sample-cart-updated"));
   };
 
   if (success) {
@@ -115,16 +121,16 @@ setSuccess(true);
         key={code}
         type="button"
         onClick={() => {
-          const updatedSamples = selectedSamples.filter(
-            (item) => item !== code
-          );
+          const updatedSamples = selectedSamples.filter((item) => item !== code);
 
-          setSelectedSamples(updatedSamples);
+setSelectedSamples(updatedSamples);
 
-          localStorage.setItem(
-            "wevine-sample-cart",
-            JSON.stringify(updatedSamples)
-          );
+localStorage.setItem(
+  "wevine-sample-cart",
+  JSON.stringify(updatedSamples)
+);
+
+window.dispatchEvent(new Event("sample-cart-updated"));
         }}
         className="group inline-flex items-center gap-2 border border-[#bcae9b] px-3.5 py-1.5 text-xs uppercase tracking-[0.14em] text-[#2d241c] transition hover:border-[#2d241c]"
       >

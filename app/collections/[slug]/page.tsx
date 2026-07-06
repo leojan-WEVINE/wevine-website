@@ -309,6 +309,9 @@ const addSampleToCart = () => {
 
     localStorage.setItem("wevine-sample-cart", JSON.stringify(updated));
 
+
+    window.dispatchEvent(new Event("sample-cart-updated"));
+
     setToastMessage(selectedProductCode);
 
 setTimeout(() => {
