@@ -52,7 +52,7 @@ export default function ProductModal({
           <div className="flex aspect-[4/5] h-[78vh] max-h-[760px] w-full max-w-[620px] items-center justify-center">
             <img
               src={selectedProduct}
-              alt={selectedProductCode}
+              alt={`${selectedProductCode} ${collectionTitle} natural woven wallcovering by WEVINE`}
               className="h-full w-full object-contain"
             />
           </div>
@@ -60,6 +60,7 @@ export default function ProductModal({
           <button
             type="button"
             onClick={onPrev}
+            aria-label="View previous wallcovering sample"
             className="absolute left-4 top-1/2 -translate-y-1/2 text-[60px] font-extralight leading-none text-[#8a7965] transition hover:scale-105 hover:text-[#2d241c]"
           >
             ‹
@@ -68,6 +69,7 @@ export default function ProductModal({
           <button
             type="button"
             onClick={onNext}
+            aria-label="View next wallcovering sample"
             className="absolute right-4 top-1/2 -translate-y-1/2 text-[60px] font-extralight leading-none text-[#8a7965] transition hover:scale-105 hover:text-[#2d241c]"
           >
             ›
@@ -119,6 +121,7 @@ export default function ProductModal({
                       key={code}
                       type="button"
                       onClick={() => onRemoveSample(code)}
+                      aria-label={`Remove ${code} from sample request`}
                       className="group inline-flex items-center gap-2 border border-[#c7b8a5] px-3.5 py-1.5 text-xs uppercase tracking-[0.14em] text-[#2d241c] transition hover:border-[#2d241c]"
                     >
                       <span>{code}</span>
