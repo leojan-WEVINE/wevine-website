@@ -16,7 +16,6 @@ const collections = [
   { slug: "timber-trace", label: "Timber Trace" },
   { slug: "drift-weave", label: "Drift Weave" },
   { slug: "totem-grain", label: "Totem Grain" },
-  { slug: "palette-weave", label: "Palette Weave" },
 ];
 
 export default function FloatingCollectionNav({

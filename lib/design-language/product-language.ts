@@ -207,52 +207,52 @@ export const productLanguage = {
   },
 
   "TT-01": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
+patternEn: "Fine Reed",
+patternZh: "細蘆紋",
 atmosphereEn: "Natural • Calm • Timeless",
 atmosphereZh: "自然 • 沉靜 • 歷久彌新",
 },
 
 "TT-02": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Fine Reed",
+patternZh: "細蘆紋",
+atmosphereEn: "Soft • Airy • Refined",
+atmosphereZh: "柔和・輕盈・雅緻",
 },
 
 "TT-03": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Fine Reed",
+patternZh: "細蘆紋",
+atmosphereEn: "Warm • Organic • Quiet",
+atmosphereZh: "溫潤・有機・沉靜",
 },
 
 "TT-04": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Charcoal Reed",
+patternZh: "炭灰蘆紋",
+atmosphereEn: "Bold • Contemporary • Architectural",
+atmosphereZh: "沉穩・當代・建築感",
 },
 
 "TT-05": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Dual Reed",
+patternZh: "雙色蘆紋",
+atmosphereEn: "Graphic • Modern • Dynamic",
+atmosphereZh: "層次・現代・律動",
 },
 
 "TT-06": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Bamboo Strip",
+patternZh: "竹節直紋",
+atmosphereEn: "Natural • Textural • Crafted",
+atmosphereZh: "自然・肌理・手作感",
 },
 
 "TT-07": {
-patternEn: "Linear Weave",
-patternZh: "線性編織",
-atmosphereEn: "Natural • Calm • Timeless",
-atmosphereZh: "自然 • 沉靜 • 歷久彌新",
+patternEn: "Bamboo Strip",
+patternZh: "竹節直紋",
+atmosphereEn: "Warm • Elegant • Organic",
+atmosphereZh: "溫潤・優雅・自然",
 },
 
 "TT-08": {
@@ -291,10 +291,10 @@ atmosphereZh: "平衡 • 自然 • 現代",
 },
 
 "TT-13": {
-patternEn: "Rustic Grid",
-patternZh: "自然格紋",
-atmosphereEn: "Rustic • Warm • Earthy",
-atmosphereZh: "質樸 • 溫暖 • 大地感",
+patternEn: "Natural Cane",
+patternZh: "天然藤紋",
+atmosphereEn: "Organic • Warm • Refined",
+atmosphereZh: "有機・溫潤・雅緻",
 },
 
 "TT-14": {
@@ -389,13 +389,6 @@ atmosphereZh: "質樸 • 溫暖 • 大地感",
 },
 
 "TT-27": {
-patternEn: "Panel Stripe",
-patternZh: "拼接條紋",
-atmosphereEn: "Bold • Architectural • Luxury",
-atmosphereZh: "鮮明 • 建築感 • 奢雅",
-},
-
-"TT-28": {
 patternEn: "Panel Stripe",
 patternZh: "拼接條紋",
 atmosphereEn: "Bold • Architectural • Luxury",

@@ -54,7 +54,7 @@ export default function ProductGallery({
               <TextureLens image={image}>
                 <img
                   src={image}
-                  alt={`${titleEn} sample ${index + 1}`}
+                  alt={`${productCode} ${titleEn} natural woven wallcovering by WEVINE`}
                   className="h-[84%] w-[84%] object-cover transition-all duration-[900ms] ease-out group-hover/lens:scale-[1.1] group-hover/lens:brightness-[1.06]"
                 />
               </TextureLens>

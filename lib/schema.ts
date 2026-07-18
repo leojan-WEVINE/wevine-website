@@ -1,6 +1,6 @@
 import { collectionSeo, type CollectionSlug } from "@/lib/collections-seo";
 
-const siteUrl = "https://wevinewallcoverings.com";
+const siteUrl = "https://www.wevinewallcoverings.com";
 
 export function homeJsonLd() {
   return {

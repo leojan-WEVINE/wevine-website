@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import SampleRequestForm from "@/components/SampleRequestForm";
+import { homeJsonLd } from "@/lib/schema";
 
 const translations = {
   en: {
@@ -20,7 +22,7 @@ const translations = {
     collectionsLabel: "Collections",
     collectionsText:
       "Discover our woven collections, each defined by texture and atmosphere.",
-    
+
     contactLabel: "Contact",
   },
   zh: {
@@ -75,137 +77,119 @@ const collections = [
     descEn: "Ancestral geometry woven into warm earthy textures.",
     descZh: "將部落幾何與溫潤天然肌理融合的編織語彙。",
   },
-  {
-    en: "Palette Weave",
-    zh: "織彩系列",
-    slug: "palette-weave",
-    image: "/images/collections/palette-weave.jpg",
-    descEn: "Woven color for modern living.",
-    descZh: "為現代生活織入色彩。",
-  },
 ];
 
-
-
 export default function Home() {
-const [lang, setLang] = useState<"en" | "zh">("en");
-const [langReady, setLangReady] = useState(false);
-const [scrolled, setScrolled] = useState(false);
+  const [lang, setLang] = useState<"en" | "zh">("en");
+  const [langReady, setLangReady] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [sampleFormOpen, setSampleFormOpen] = useState(false);
   useEffect(() => {
-  const openSampleForm = () => {
-    const params = new URLSearchParams(window.location.search);
+    const openSampleForm = () => {
+      const params = new URLSearchParams(window.location.search);
 
-    if (params.get("sampleRequest") === "1") {
-      setSampleFormOpen(true);
+      if (params.get("sampleRequest") === "1") {
+        setSampleFormOpen(true);
 
-      setTimeout(() => {
-        document
-          .getElementById("contact-info")
-          ?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    }
-  };
+        setTimeout(() => {
+          document
+            .getElementById("contact-info")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    };
 
-  openSampleForm();
+    openSampleForm();
 
-  window.addEventListener("popstate", openSampleForm);
-  window.addEventListener("hashchange", openSampleForm);
+    window.addEventListener("popstate", openSampleForm);
+    window.addEventListener("hashchange", openSampleForm);
 
-  return () => {
-    window.removeEventListener("popstate", openSampleForm);
-    window.removeEventListener("hashchange", openSampleForm);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("popstate", openSampleForm);
+      window.removeEventListener("hashchange", openSampleForm);
+    };
+  }, []);
 
   useEffect(() => {
-  const savedLang = localStorage.getItem("wevine-lang");
+    const savedLang = localStorage.getItem("wevine-lang");
 
-  if (savedLang === "en" || savedLang === "zh") {
-    setLang(savedLang);
-  }
+    if (savedLang === "en" || savedLang === "zh") {
+      setLang(savedLang);
+    }
 
-  setLangReady(true);
-}, []);
+    setLangReady(true);
+  }, []);
 
-useEffect(() => {
-  if (!langReady) return;
+  useEffect(() => {
+    if (!langReady) return;
 
-  localStorage.setItem("wevine-lang", lang);
-}, [lang, langReady]);
+    localStorage.setItem("wevine-lang", lang);
+  }, [lang, langReady]);
 
-const inspirationSlides = [
-  {
-    titleEn: "Material Story",
-    titleZh: "材質之境",
-    subtitleEn: "Crafted from Nature",
-    subtitleZh: "源於自然",
-    descEn:
-  "Natural fibers,\nrefined textures,\ntimeless interiors.",
+  const inspirationSlides = [
+    {
+      titleEn: "Material Story",
+      titleZh: "材質之境",
+      subtitleEn: "Crafted from Nature",
+      subtitleZh: "源於自然",
+      descEn: "Natural fibers,\nrefined textures,\ntimeless interiors.",
 
-descZh:
-  "天然纖維，\n細緻紋理，\n歷久彌新的空間美學。",
-    image: "/images/inspiration/material-story.jpg",
-  },
+      descZh: "天然纖維，\n細緻紋理，\n歷久彌新的空間美學。",
+      image: "/images/inspiration/material-story.jpg",
+    },
 
-  {
-  titleEn: "Craftsmanship",
-  titleZh: "編織工藝",
+    {
+      titleEn: "Craftsmanship",
+      titleZh: "編織工藝",
 
-  subtitleEn: "The Craft Behind Every Weave",
-  subtitleZh: "每一道紋理，都始於工藝。",
+      subtitleEn: "The Craft Behind Every Weave",
+      subtitleZh: "每一道紋理，都始於工藝。",
 
-  descEn:
-    "Natural fibres are carefully selected and woven through a process that balances tradition, material integrity and modern performance.",
+      descEn:
+        "Natural fibres are carefully selected and woven through a process that balances tradition, material integrity and modern performance.",
 
-  descZh:
-    "從天然纖維的甄選到細緻的編織製程，每一款壁布皆承載著材料本質與職人技藝，展現真實而歷久彌新的質感。",
+      descZh:
+        "從天然纖維的甄選到細緻的編織製程，每一款壁布皆承載著材料本質與職人技藝，展現真實而歷久彌新的質感。",
 
-  image: "/images/inspiration/craftsmanship.jpg",
-},
+      image: "/images/inspiration/craftsmanship.jpg",
+    },
 
-  {
-    titleEn: "Residential",
-    titleZh: "住宅空間",
-    subtitleEn: "Featuring Atelier Weave",
-    subtitleZh: "Atelier Weave 系列",
-    descEn:
-      "Soft textures and natural warmth for refined living spaces.",
-    descZh:
-      "以柔和紋理與自然暖意，營造精緻居住空間。",
-    image: "/images/inspiration/residential.jpg",
-  },
+    {
+      titleEn: "Residential",
+      titleZh: "住宅空間",
+      subtitleEn: "Featuring Atelier Weave",
+      subtitleZh: "Atelier Weave 系列",
+      descEn: "Soft textures and natural warmth for refined living spaces.",
+      descZh: "以柔和紋理與自然暖意，營造精緻居住空間。",
+      image: "/images/inspiration/residential.jpg",
+    },
 
-  {
-    titleEn: "Hospitality",
-    titleZh: "旅宿空間",
-    subtitleEn: "Featuring Timber Trace",
-    subtitleZh: "Timber Trace 系列",
-    descEn:
-      "Layered materials that bring warmth and quiet luxury.",
-    descZh:
-      "以層次材質帶來溫度與低調奢華。",
-    image: "/images/inspiration/hospitality.jpg",
-  },
+    {
+      titleEn: "Hospitality",
+      titleZh: "旅宿空間",
+      subtitleEn: "Featuring Timber Trace",
+      subtitleZh: "Timber Trace 系列",
+      descEn: "Layered materials that bring warmth and quiet luxury.",
+      descZh: "以層次材質帶來溫度與低調奢華。",
+      image: "/images/inspiration/hospitality.jpg",
+    },
 
-  {
-    titleEn: "Commercial",
-    titleZh: "商業空間",
-    subtitleEn: "Featuring Drift Weave",
-    subtitleZh: "Drift Weave 系列",
-    descEn:
-      "Subtle woven movement for modern commercial interiors.",
-    descZh:
-      "以細膩流動的編織紋理，回應現代商業空間。",
-    image: "/images/inspiration/commercial.jpg",
-  },
-];
+    {
+      titleEn: "Commercial",
+      titleZh: "商業空間",
+      subtitleEn: "Featuring Drift Weave",
+      subtitleZh: "Drift Weave 系列",
+      descEn: "Subtle woven movement for modern commercial interiors.",
+      descZh: "以細膩流動的編織紋理，回應現代商業空間。",
+      image: "/images/inspiration/commercial.jpg",
+    },
+  ];
 
-const [activeInspiration, setActiveInspiration] = useState(0);
+  const [activeInspiration, setActiveInspiration] = useState(0);
 
-const t = translations[lang];
+  const t = translations[lang];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -215,75 +199,69 @@ const t = translations[lang];
   }, []);
 
   const scrollCollections = (direction: "left" | "right") => {
-  if (!carouselRef.current) return;
+    if (!carouselRef.current) return;
 
-  carouselRef.current.scrollBy({
-    left: direction === "left" ? -440 : 440,
-    behavior: "smooth",
-  });
-};
-
-const prevInspiration = () => {
-  setActiveInspiration((current) =>
-    current === 0
-      ? inspirationSlides.length - 1
-      : current - 1
-  );
-};
-
-const nextInspiration = () => {
-  setActiveInspiration((current) =>
-    current === inspirationSlides.length - 1
-      ? 0
-      : current + 1
-  );
-};
-
-const [sampleCount, setSampleCount] = useState(0);
-useEffect(() => {
-  const updateSampleCount = () => {
-    const savedSamples = localStorage.getItem("wevine-sample-cart");
-
-    if (!savedSamples) {
-      setSampleCount(0);
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(savedSamples);
-      setSampleCount(Array.isArray(parsed) ? parsed.length : 0);
-    } catch {
-      setSampleCount(0);
-    }
+    carouselRef.current.scrollBy({
+      left: direction === "left" ? -440 : 440,
+      behavior: "smooth",
+    });
   };
 
-  updateSampleCount();
-
-  window.addEventListener("sample-cart-updated", updateSampleCount);
-  window.addEventListener("storage", updateSampleCount);
-
-  return () => {
-    window.removeEventListener("sample-cart-updated", updateSampleCount);
-    window.removeEventListener("storage", updateSampleCount);
+  const prevInspiration = () => {
+    setActiveInspiration((current) =>
+      current === 0 ? inspirationSlides.length - 1 : current - 1,
+    );
   };
-}, []);
 
-const activeSlide =
-  inspirationSlides[activeInspiration];
+  const nextInspiration = () => {
+    setActiveInspiration((current) =>
+      current === inspirationSlides.length - 1 ? 0 : current + 1,
+    );
+  };
 
-return (
+  const [sampleCount, setSampleCount] = useState(0);
+  useEffect(() => {
+    const updateSampleCount = () => {
+      const savedSamples = localStorage.getItem("wevine-sample-cart");
+
+      if (!savedSamples) {
+        setSampleCount(0);
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(savedSamples);
+        setSampleCount(Array.isArray(parsed) ? parsed.length : 0);
+      } catch {
+        setSampleCount(0);
+      }
+    };
+
+    updateSampleCount();
+
+    window.addEventListener("sample-cart-updated", updateSampleCount);
+    window.addEventListener("storage", updateSampleCount);
+
+    return () => {
+      window.removeEventListener("sample-cart-updated", updateSampleCount);
+      window.removeEventListener("storage", updateSampleCount);
+    };
+  }, []);
+
+  const activeSlide = inspirationSlides[activeInspiration];
+
+  return (
     <main className="bg-[#f4efe8] text-stone-900">
-      
       <Navbar
-  navCollections={t.navCollections}
-  navInspiration={t.navInspiration}
-  navContact={t.navContact}
-  scrolled={scrolled}
-  menuOpen={menuOpen}
-  setMenuOpen={setMenuOpen}
-  onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
-  sampleCount={sampleCount}
-/>
+        navCollections={t.navCollections}
+        navInspiration={t.navInspiration}
+        navContact={t.navContact}
+        scrolled={scrolled}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        onToggleLang={() => setLang(lang === "en" ? "zh" : "en")}
+        sampleCount={sampleCount}
+      />
 
       {/* HERO */}
       <section className="relative flex min-h-screen items-start overflow-hidden px-8 pt-32 text-white lg:px-20 lg:pt-40">
@@ -300,10 +278,10 @@ return (
           </p>
 
           <div className="min-h-[180px] md:min-h-[200px]">
-  <h1 className="font-serif text-5xl leading-[1.05] tracking-[-0.03em] whitespace-pre-line md:text-6xl">
-    {t.heroTitle}
-  </h1>
-</div>
+            <h1 className="font-serif text-5xl leading-[1.05] tracking-[-0.03em] whitespace-pre-line md:text-6xl">
+              {t.heroTitle}
+            </h1>
+          </div>
 
           <div className="my-9 h-px w-20 bg-white/60" />
 
@@ -312,13 +290,13 @@ return (
           </p>
 
           <div className="mt-10">
-  <a
-    href="#collections"
-    className="inline-flex h-16 w-[360px] items-center justify-center border border-white/45 text-sm uppercase tracking-[0.22em] text-white transition-opacity duration-300 hover:opacity-70"
-  >
-    {t.heroButton}
-  </a>
-</div>
+            <a
+              href="#collections"
+              className="inline-flex h-16 w-[360px] items-center justify-center border border-white/45 text-sm uppercase tracking-[0.22em] text-white transition-opacity duration-300 hover:opacity-70"
+            >
+              {t.heroButton}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -334,62 +312,39 @@ return (
               {t.collectionsText}
             </p>
           </div>
-
-          <div className="hidden items-center gap-3 md:flex">
-            <button
-  type="button"
-  onClick={() => scrollCollections("left")}
-  className="text-[48px] font-extralight leading-none text-black/40 transition-all duration-500 ease-out hover:scale-105 hover:text-black/80"
->
-  ‹
-</button>
-
-<button
-  type="button"
-  onClick={() => scrollCollections("right")}
-  className="text-[48px] font-extralight leading-none text-black/40 transition-all duration-500 ease-out hover:scale-105 hover:text-black/80"
->
-  ›
-</button>
-          </div>
         </div>
 
-        <div
-          ref={carouselRef}
-          className="flex gap-8 overflow-x-auto scroll-smooth pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
+        <div className="grid grid-cols-1 gap-8 pb-6 md:grid-cols-2 lg:grid-cols-4">
           {collections.map((item, index) => (
-            <CollectionCard
-              key={item.slug}
-              item={item}
-              lang={lang}
-            />
+            <Reveal key={item.slug} delay={index * 140}>
+              <CollectionCard item={item} lang={lang} />
+            </Reveal>
           ))}
         </div>
       </section>
 
+      {/* INSPIRATION */}
+      <section
+        id="inspiration"
+        className="relative scroll-mt-48 overflow-hidden bg-black"
+      >
+        <div className="relative h-[85vh] min-h-[720px] w-full overflow-hidden">
+          <div
+            className="absolute inset-0 flex transition-transform duration-1000 ease-out"
+            style={{ transform: `translateX(-${activeInspiration * 100}%)` }}
+          >
+            {inspirationSlides.map((slide) => (
+              <img
+                key={slide.image}
+                src={slide.image}
+                alt={slide.titleEn}
+                className="h-full w-full shrink-0 object-cover"
+              />
+            ))}
+          </div>
 
-{/* INSPIRATION */}
-<section
-  id="inspiration"
-  className="relative scroll-mt-48 overflow-hidden bg-black"
->
-  <div className="relative h-[85vh] min-h-[720px] w-full overflow-hidden">
-    <div className="absolute inset-0 flex transition-transform duration-1000 ease-out"
-  style={{ transform: `translateX(-${activeInspiration * 100}%)` }}
->
-  {inspirationSlides.map((slide) => (
-    <img
-      key={slide.image}
-      src={slide.image}
-      alt={slide.titleEn}
-      className="h-full w-full shrink-0 object-cover"
-    />
-  ))}
-</div>
-
-    <div
-  className="
+          <div
+            className="
     absolute
     inset-0
     bg-gradient-to-r
@@ -397,27 +352,27 @@ return (
     via-black/10
     to-transparent
   "
-/>
+          />
 
-    <button
-      type="button"
-      onClick={prevInspiration}
-      className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-[72px] font-extralight leading-none text-white/70 transition-all duration-500 ease-out hover:text-white hover:scale-105 md:left-10"
-    >
-      ‹
-    </button>
+          <button
+            type="button"
+            onClick={prevInspiration}
+            className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-[72px] font-extralight leading-none text-white/70 transition-all duration-500 ease-out hover:text-white hover:scale-105 md:left-10"
+          >
+            ‹
+          </button>
 
-    <button
-      type="button"
-      onClick={nextInspiration}
-      className="absolute right-6 top-1/2 z-20 -translate-y-1/2 text-[72px] font-extralight leading-none text-white/70 transition-all duration-500 ease-out hover:text-white hover:scale-105 md:right-10"
-    >
-      ›
-    </button>
+          <button
+            type="button"
+            onClick={nextInspiration}
+            className="absolute right-6 top-1/2 z-20 -translate-y-1/2 text-[72px] font-extralight leading-none text-white/70 transition-all duration-500 ease-out hover:text-white hover:scale-105 md:right-10"
+          >
+            ›
+          </button>
 
-    <div
-  key={activeInspiration}
-  className="
+          <div
+            key={activeInspiration}
+            className="
     absolute
     left-[8%]
     top-1/2
@@ -430,194 +385,234 @@ return (
     [text-shadow:0_2px_12px_rgba(0,0,0,0.35)]
     inspiration-text-fade
   "
->
-      <p className="mb-5 text-base uppercase tracking-[0.32em] text-white/75">
-  {lang === "en" ? "INSPIRATION" : "靈感空間"}
-</p>
+          >
+            <p className="mb-5 text-base uppercase tracking-[0.32em] text-white/75">
+              {lang === "en" ? "INSPIRATION" : "靈感空間"}
+            </p>
 
-      <p className="mb-6 text-sm uppercase tracking-[0.28em] text-white/70">
-        {lang === "en" ? activeSlide.subtitleEn : activeSlide.subtitleZh}
-      </p>
+            <p className="mb-6 text-sm uppercase tracking-[0.28em] text-white/70">
+              {lang === "en" ? activeSlide.subtitleEn : activeSlide.subtitleZh}
+            </p>
 
-      <div className="max-w-[700px]">
-  <h2 className="font-serif text-5xl leading-tight tracking-[-0.04em] text-white md:text-7xl">
-    {lang === "en" ? activeSlide.titleEn : activeSlide.titleZh}
-  </h2>
+            <div className="max-w-[700px]">
+              <h2 className="font-serif text-5xl leading-tight tracking-[-0.04em] text-white md:text-7xl">
+                {lang === "en" ? activeSlide.titleEn : activeSlide.titleZh}
+              </h2>
 
-  <p className="mt-8 max-w-[32ch] whitespace-pre-line text-lg leading-9 text-white/85 md:text-xl">
-  {lang === "en" ? activeSlide.descEn : activeSlide.descZh}
-</p>
-</div>
+              <p className="mt-8 max-w-[32ch] whitespace-pre-line text-lg leading-9 text-white/85 md:text-xl">
+                {lang === "en" ? activeSlide.descEn : activeSlide.descZh}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    
-    </div>
-  </div>
-</section>
-
-{/* CONTACT */}
-<section
-  id="contact-info"
-  className="relative scroll-mt-48 overflow-hidden px-8 py-16 text-[#2d241c] lg:px-20 lg:py-20"
->
-  <div
-  className="absolute inset-0 bg-cover bg-center opacity-70"
-  style={{
-    backgroundImage: "url('/images/contact/contact-bg.jpg')",
-  }}
-/>
-  <div className="absolute inset-0 bg-[#e9ddcd]/35" />
-
-  <div className="relative z-10">
-  <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr]">
-    <div>
-      <p className="mb-6 text-base uppercase tracking-[0.25em] text-[#2d241c]">
-  {t.contactLabel}
-</p>
-
-      <h2 className="max-w-3xl text-5xl font-light leading-[1.02] tracking-[-0.04em] lg:text-7xl">
-        {lang === "en" ? (
-          <>
-            Let’s Discuss
-            <br />
-            Your Project.
-          </>
-        ) : (
-          <>
-            一起討論
-            <br />
-            你的空間計畫
-          </>
-        )}
-      </h2>
-    </div>
-
-    <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:pt-10">
-  <div className="flex min-h-[520px] flex-col p-8">
-  <div className="inline-block">
-  <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
-  {lang === "en" ? "Request Samples" : "申請樣品"}
-</p>
-
-  <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
-</div>
-
-<h3 className="mt-8 text-[2rem] font-light leading-tight text-[#2d241c]">
-    {lang === "en" ? (
-      <>
-        Experience Texture
-        <br />
-        In Person
-      </>
-    ) : (
-      <>
-        親自感受
-        <br />
-        材質與工藝
-      </>
-    )}
-  </h3>
-
-  <p className="mt-6 max-w-md text-xl leading-9 text-[#2d241c]">
-    {lang === "en"
-      ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
-      : "申請精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
-  </p>
-
-  <div className="mt-8">
-    <button
-  type="button"
-  onClick={() => setSampleFormOpen(true)}
-  className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
->
-  {lang === "en" ? "Request Samples" : "申請樣品"}
-</button>
-  </div>
-
-</div>
-
-<div className="min-h-[520px] p-8">
-
-  <div className="inline-block">
-    <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
-  {lang === "en" ? "Contact" : "聯絡我們"}
-</p>
-
-    <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
-  </div>
-
-  <h3 className="mt-8 text-[2rem] font-light leading-tight text-[#2d241c]">
-    {lang === "en" ? "Project Inquiry" : "專案洽詢"}
-  </h3>
-
-  <p className="mt-6 text-xl leading-9 text-[#2d241c]">
-  {lang === "en"
-    ? "Residential, hospitality, restaurant and commercial projects."
-    : "高端住宅、精品飯店、餐飲空間、商業空間及客製化設計專案合作。"}
-</p>
-
-  <div className="mt-10 space-y-5">
-    <a
-      href="mailto:hello@wevinewallcoverings.com"
-      className="block text-xl text-[#2d241c] transition hover:text-[#6b5744]"
-    >
-      hello@wevinewallcoverings.com
-    </a>
-  </div>
-
-</div>
-    </div>
-  </div>
-
-  <div className="mt-12 border-t border-[#c7b8a5]/70 pt-6">
-  <div className="flex justify-end items-center gap-6">
-  <img
-  src="/images/brand/wevine-lockup-black.svg"
-  alt="WEVINE"
-  className="h-8 w-auto"
-/>
-
-  <p className="text-sm tracking-[0.08em] text-[#2d241c]">
-  © 2026 WEVINE. All rights reserved.
-</p>
-</div>
-</div>
-
-{sampleFormOpen && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
-    <button
-      type="button"
-      onClick={() => setSampleFormOpen(false)}
-      className="absolute inset-0 bg-black/65 backdrop-blur-md"
-      aria-label="Close sample request form"
-    />
-
-    <div className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto border border-[#d8cec0] bg-[#faf7f2] p-8 shadow-2xl ring-1 ring-white/30 lg:p-10">
-      <button
-        type="button"
-        onClick={() => setSampleFormOpen(false)}
-        className="absolute right-6 top-5 text-2xl font-light text-[#6f6254] transition hover:text-[#2d241c]"
+      {/* CONTACT */}
+      <section
+        id="contact-info"
+        className="relative scroll-mt-48 overflow-hidden px-8 py-16 text-[#2d241c] lg:px-20 lg:py-20"
       >
-        ×
-      </button>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-70"
+          style={{
+            backgroundImage: "url('/images/contact/contact-bg.jpg')",
+          }}
+        />
+        <div className="absolute inset-0 bg-[#e9ddcd]/35" />
 
-      <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
-        {lang === "en" ? "Sample Request" : "申請樣品"}
-      </p>
+        <div className="relative z-10">
+          <div className="grid gap-14 lg:grid-cols-[0.75fr_1.25fr]">
+            <div>
+              <p className="mb-6 text-base uppercase tracking-[0.25em] text-[#2d241c]">
+                {t.contactLabel}
+              </p>
 
-      <h3 className="mb-8 pr-10 text-4xl font-light leading-tight text-[#2d241c]">
-        {lang === "en"
-          ? "Tell us about your project."
-          : "告訴我們您的空間計畫"}
-      </h3>
+              <h2 className="max-w-3xl text-5xl font-light leading-[1.02] tracking-[-0.04em] lg:text-7xl">
+                {lang === "en" ? (
+                  <>
+                    Let’s Discuss
+                    <br />
+                    Your Project.
+                  </>
+                ) : (
+                  <>
+                    一起討論
+                    <br />
+                    你的空間計畫
+                  </>
+                )}
+              </h2>
+            </div>
 
-      <SampleRequestForm lang={lang} />
-    </div>
-  </div>
-)}
+            <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:pt-10">
+              <div className="flex min-h-[520px] flex-col p-8">
+                <div className="inline-block">
+                  <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
+                    {lang === "en" ? "Request Samples" : "申請樣品"}
+                  </p>
 
-  </div>
-</section>
+                  <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
+                </div>
+
+                <h3 className="mt-8 text-[2rem] font-light leading-tight text-[#2d241c]">
+                  {lang === "en" ? (
+                    <>
+                      Experience Texture
+                      <br />
+                      In Person
+                    </>
+                  ) : (
+                    <>
+                      親自感受
+                      <br />
+                      材質與工藝
+                    </>
+                  )}
+                </h3>
+
+                <p className="mt-6 max-w-md text-xl leading-9 text-[#2d241c]">
+                  {lang === "en"
+                    ? "Receive curated wallcovering samples to explore texture, craftsmanship and colour before specifying your next project."
+                    : "申請精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
+                </p>
+
+                <div className="mt-8">
+                  <button
+                    type="button"
+                    onClick={() => setSampleFormOpen(true)}
+                    className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+                  >
+                    {lang === "en" ? "Request Samples" : "申請樣品"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="min-h-[520px] p-8">
+                <div className="inline-block">
+                  <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
+                    {lang === "en" ? "Contact" : "聯絡我們"}
+                  </p>
+
+                  <div className="mt-2 h-px w-full origin-left scale-x-0 bg-[#8a7965] transition-transform duration-500 group-hover:scale-x-100" />
+                </div>
+
+                <h3 className="mt-8 text-[2rem] font-light leading-tight text-[#2d241c]">
+                  {lang === "en" ? "Project Inquiry" : "專案洽詢"}
+                </h3>
+
+                <p className="mt-6 text-xl leading-9 text-[#2d241c]">
+                  {lang === "en"
+                    ? "Residential, hospitality, restaurant and commercial projects."
+                    : "高端住宅、精品飯店、餐飲空間、商業空間及客製化設計專案合作。"}
+                </p>
+
+                <div className="mt-10 space-y-5">
+                  <a
+                    href="mailto:hello@wevinewallcoverings.com"
+                    className="block text-xl text-[#2d241c] transition hover:text-[#6b5744]"
+                  >
+                    hello@wevinewallcoverings.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 border-t border-[#c7b8a5]/70 pt-6">
+            <div className="flex justify-end items-center gap-6">
+              <img
+                src="/images/brand/wevine-lockup-black.svg"
+                alt="WEVINE"
+                className="h-8 w-auto"
+              />
+
+              <p className="text-sm tracking-[0.08em] text-[#2d241c]">
+                © 2026 WEVINE. All rights reserved.
+              </p>
+            </div>
+          </div>
+
+          {sampleFormOpen && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+              <button
+                type="button"
+                onClick={() => setSampleFormOpen(false)}
+                className="absolute inset-0 bg-black/65 backdrop-blur-md"
+                aria-label="Close sample request form"
+              />
+
+              <div className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto border border-[#d8cec0] bg-[#faf7f2] p-8 shadow-2xl ring-1 ring-white/30 lg:p-10">
+                <button
+                  type="button"
+                  onClick={() => setSampleFormOpen(false)}
+                  className="absolute right-6 top-5 text-2xl font-light text-[#6f6254] transition hover:text-[#2d241c]"
+                >
+                  ×
+                </button>
+
+                <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
+                  {lang === "en" ? "Sample Request" : "申請樣品"}
+                </p>
+
+                <h3 className="mb-8 pr-10 text-4xl font-light leading-tight text-[#2d241c]">
+                  {lang === "en"
+                    ? "Tell us about your project."
+                    : "告訴我們您的空間計畫"}
+                </h3>
+
+                <SampleRequestForm lang={lang} />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </main>
+  );
+}
+
+function Reveal({
+  children,
+  delay = 0,
+}: {
+  children: ReactNode;
+  delay?: number;
+}) {
+  const revealRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = revealRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        setIsVisible(true);
+        observer.unobserve(element);
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -5% 0px",
+      },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={revealRef}
+      className={`transition-all duration-[1100ms] motion-reduce:translate-y-0 motion-reduce:opacity-100 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+      }`}
+      style={{ transitionDelay: isVisible ? `${delay}ms` : "0ms" }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -633,34 +628,201 @@ function CollectionCard({
     descEn: string;
     descZh: string;
   };
-
   lang: "en" | "zh";
 }) {
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const handlePointerMove = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+
+    setCursorPosition({
+      x: event.clientX - bounds.left,
+      y: event.clientY - bounds.top,
+    });
+  };
+
   return (
     <Link
-      href={`/collections/${item.slug}`}
-      className="group block min-w-[420px] max-w-[420px]"
-    >
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#e9e1d6]">
+  href={`/collections/${item.slug}`}
+  className="
+    group
+    block
+    w-full
+    transition-transform
+    duration-[900ms]
+    [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+    hover:-translate-y-2
+  "
+>
+      {/* IMAGE */}
+      <div
+        className="relative isolate aspect-[16/10] overflow-hidden bg-[#e9e1d6] lg:cursor-none"
+        onPointerEnter={() => setCursorVisible(true)}
+        onPointerLeave={() => setCursorVisible(false)}
+        onPointerMove={handlePointerMove}
+      >
         <img
           src={item.image}
           alt={item.en}
-          className="h-full w-full object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.025] group-hover:brightness-[1.04]"
+          className="
+            h-full
+            w-full
+            object-cover
+            brightness-[1.01]
+            transition-all
+            delay-[80ms]
+            duration-[1200ms]
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+            group-hover:delay-0
+            group-hover:duration-[1800ms]
+            group-hover:scale-[1.035]
+            group-hover:-translate-y-[2px]
+            group-hover:brightness-[1.06]
+          "
         />
 
-        <div className="absolute inset-0 bg-black/20 transition duration-700 group-hover:bg-black/30" />
+        {/* SOFT OVERLAY */}
+        <div
+          className="
+            absolute
+            inset-0
+            bg-black/5
+            transition-all
+            delay-[80ms]
+            duration-[1000ms]
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+            group-hover:delay-0
+            group-hover:duration-[1200ms]
+            group-hover:bg-black/14
+          "
+        />
 
-        <div className="absolute left-8 top-8 text-white">
-          
-
-          <h3 className="max-w-[260px] text-4xl font-light leading-[1.05] tracking-[-0.04em]">
+        {/* IMAGE HOVER TITLE */}
+        <div className="pointer-events-none absolute inset-x-8 top-8 z-10 text-white">
+          <h3
+            className="
+              translate-y-3
+              text-4xl
+              font-light
+              leading-[1.05]
+              tracking-[-0.04em]
+              opacity-0
+              transition-all
+              delay-[80ms]
+              duration-700
+              ease-out
+              group-hover:delay-[120ms]
+              group-hover:translate-y-0
+              group-hover:opacity-100
+            "
+          >
             {lang === "en" ? item.en : item.zh}
           </h3>
 
-          <div className="mt-5 h-px w-12 bg-white/60" />
+          <div
+            className="
+              mt-5
+              h-px
+              w-0
+              bg-white/70
+              transition-all
+              delay-[80ms]
+              duration-700
+              ease-out
+              group-hover:delay-[220ms]
+              group-hover:w-12
+            "
+          />
         </div>
 
-        
+        {/* CUSTOM VIEW CURSOR */}
+        <div
+  aria-hidden="true"
+  className={`
+    pointer-events-none
+    absolute
+    left-0
+    top-0
+    z-20
+    hidden
+    h-16
+    w-16
+    items-center
+    justify-center
+    rounded-full
+    border
+    border-white/25
+    bg-black/35
+    text-[8.5px]
+    font-medium
+    uppercase
+    tracking-[0.26em]
+    text-white
+    shadow-[0_10px_35px_rgba(0,0,0,0.14)]
+    backdrop-blur-lg
+    transition-opacity
+    duration-300
+    ease-out
+    lg:flex
+    ${cursorVisible ? "opacity-100" : "opacity-0"}
+  `}
+  style={{
+  transform: `translate3d(
+    ${cursorPosition.x - 32}px,
+    ${cursorPosition.y - 32}px,
+    0
+  ) scale(${cursorVisible ? 1 : 0.92})`,
+  transition:
+    "opacity 180ms ease-out, transform 180ms cubic-bezier(0.22,1,0.36,1)",
+}}
+>
+  VIEW 
+</div>
+      </div>
+
+      {/* DESCRIPTION BELOW IMAGE */}
+      <div
+        className="
+          grid
+          grid-rows-[0fr]
+          transition-[grid-template-rows]
+          delay-[80ms]
+          duration-700
+          ease-out
+          group-hover:delay-[200ms]
+          group-hover:grid-rows-[1fr]
+        "
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="border-t border-stone-300/50 pt-5">
+            <p
+              className={`
+                translate-y-2
+                text-[15px]
+                font-light
+                tracking-[0.04em]
+                text-stone-700
+                opacity-0
+                transition-all
+                delay-[80ms]
+                duration-700
+                ease-out
+                group-hover:delay-[280ms]
+                group-hover:translate-y-0
+                group-hover:opacity-100
+                ${lang === "en" ? "italic" : ""}
+              `}
+            >
+              {lang === "en" ? item.descEn : item.descZh}
+            </p>
+          </div>
+        </div>
       </div>
     </Link>
   );

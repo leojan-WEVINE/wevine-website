@@ -3,7 +3,7 @@ import CollectionPageClient from "./CollectionPageClient";
 import { collectionSeo, type CollectionSlug } from "@/lib/collections-seo";
 import { collectionJsonLd } from "@/lib/schema";
 
-const siteUrl = "https://wevinewallcoverings.com";
+const siteUrl = "https://www.wevinewallcoverings.com";
 
 type Props = {
   params: Promise<{

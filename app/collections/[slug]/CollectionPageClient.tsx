@@ -143,38 +143,7 @@ const collectionData = {
     ),
   },
 
-  "palette-weave": {
-    title: { en: "Palette Weave", zh: "織彩系列" },
-    subtitle: {
-      en: "Woven color for modern living.",
-      zh: "為現代生活織入色彩。",
-    },
-    textureTitle: {
-      en: "Soft Color, Editorial Texture",
-      zh: "柔和色彩與雜誌感肌理",
-    },
-    textureText: {
-      en: "Palette Weave brings color into natural woven surfaces with a refined, fashion-inspired sensibility. From blush and coral to seafoam and indigo tones, the series is designed for boutique apartments, modern residences, and interiors that seek warmth, personality, and quiet elegance.",
-      zh: "Palette Weave 將色彩注入天然編織表面，以細膩而時尚的語彙呈現空間個性。從桃紅、珊瑚紅到藍綠與靛藍色調，適合精品公寓、現代住宅與追求溫度、個性及柔和優雅的室內空間。",
-    },
-    textureImage: "/images/textures/palette-weave-texture.jpg",
-    spaceBoard: "/images/spaces/palette-weave-space-board.jpg",
-    specifications: {
-  width: '91.4 cm (36")',
-  backing: "Paper Backing",
-  application: "Interior Wallcovering",
-  maintenance:
-    "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
-},
-    products: Array.from(
-      { length: 24 },
-      (_, i) =>
-        `/images/products/palette-weave/palette-weave-${String(i + 1).padStart(
-          2,
-          "0"
-        )}.jpg`
-    ),
-  },
+  
 };
 
 export default function CollectionPage() {
@@ -271,7 +240,7 @@ useEffect(() => {
   "timber-trace": "TT",
   "drift-weave": "DW",
   "totem-grain": "TG",
-  "palette-weave": "PW",
+  
 } as const;
 
 const collectionCode = collectionCodeMap[slug];
