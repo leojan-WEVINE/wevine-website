@@ -8,36 +8,28 @@ export const collectionSeo = {
     productCount: 34,
   },
   "timber-trace": {
-    title: "Timber Trace | Natural Wallcoverings | WEVINE",
+    title: "Timber Trace | Natural Woven Wallcoverings | WEVINE",
     description:
-      "Discover Timber Trace natural wallcoverings, inspired by weathered wood, organic grain, and warm architectural textures for refined interiors.",
+      "Discover Timber Trace, a collection of natural woven wallcoverings inspired by weathered wood, organic grain and architectural textures for residential, hospitality and commercial interiors.",
     image: "/images/spaces/timber-trace-space-board.jpg",
     code: "TT",
     productCount: 28,
   },
   "drift-weave": {
-    title: "Drift Weave | Natural Wallcoverings | WEVINE",
+    title: "Drift Weave | Natural Woven Wallcoverings | WEVINE",
     description:
-      "Explore Drift Weave, a soft flowing wallcovering collection with quiet movement, subtle woven texture, and tonal depth.",
+      "Explore Drift Weave, a collection of natural woven wallcoverings featuring soft movement, refined woven textures and tonal depth for residential, hospitality and commercial interiors.",
     image: "/images/spaces/drift-weave-space-board.jpg",
     code: "DW",
     productCount: 16,
   },
   "totem-grain": {
-    title: "Totem Grain | Natural Wallcoverings | WEVINE",
+    title: "Totem Grain | Natural Woven Wallcoverings | WEVINE",
     description:
-      "Discover Totem Grain natural wallcoverings, shaped by organic patterns, crafted textures, and expressive woven rhythm.",
+      "Discover Totem Grain, a collection of natural woven wallcoverings featuring expressive organic patterns and handcrafted textures for residential, hospitality and commercial interiors.",
     image: "/images/spaces/totem-grain-space-board.jpg",
     code: "TG",
     productCount: 26,
-  },
-  "palette-weave": {
-    title: "Palette Weave | Natural Wallcoverings | WEVINE",
-    description:
-      "Explore Palette Weave, a refined natural wallcovering collection with soft color, woven depth, and versatile interior applications.",
-    image: "/images/spaces/palette-weave-space-board.jpg",
-    code: "PW",
-    productCount: 24,
   },
 } as const;
 

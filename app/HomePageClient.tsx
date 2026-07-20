@@ -86,6 +86,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [sampleFormOpen, setSampleFormOpen] = useState(false);
+  const [projectFormOpen, setProjectFormOpen] = useState(false);
   useEffect(() => {
     const openSampleForm = () => {
       const params = new URLSearchParams(window.location.search);
@@ -427,25 +428,25 @@ export default function Home() {
                 {t.contactLabel}
               </p>
 
-              <h2 className="max-w-3xl text-5xl font-light leading-[1.02] tracking-[-0.04em] lg:text-7xl">
+              <h2 className="max-w-3xl text-5xl font-light leading-[1.05] tracking-[-0.035em] lg:text-6xl">
                 {lang === "en" ? (
-                  <>
-                    Let’s Discuss
-                    <br />
-                    Your Project.
-                  </>
-                ) : (
-                  <>
-                    一起討論
-                    <br />
-                    你的空間計畫
-                  </>
-                )}
+  <>
+    Let’s Discuss
+    <br />
+    Your Next Project.
+  </>
+) : (
+  <>
+    一起構築
+    <br />
+    您的下一個空間。
+  </>
+)}
               </h2>
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:pt-10">
-              <div className="flex min-h-[520px] flex-col p-8">
+              <div className="group flex flex-col p-8 lg:min-h-[470px]">
                 <div className="inline-block">
                   <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
                     {lang === "en" ? "Request Samples" : "申請樣品"}
@@ -476,18 +477,18 @@ export default function Home() {
                     : "申請精選壁布樣品，親自感受材質、編織細節與色彩層次，為您的下一個空間專案找到最適合的選擇。"}
                 </p>
 
-                <div className="mt-8">
-                  <button
-                    type="button"
-                    onClick={() => setSampleFormOpen(true)}
-                    className="mt-8 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
-                  >
-                    {lang === "en" ? "Request Samples" : "申請樣品"}
-                  </button>
-                </div>
+                <div className="mt-10 lg:mt-auto">
+  <button
+    type="button"
+    onClick={() => setSampleFormOpen(true)}
+    className="inline-flex h-14 w-full max-w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition duration-300 hover:bg-[#6b5744]"
+  >
+    {lang === "en" ? "Request Samples" : "申請樣品"}
+  </button>
+</div>
               </div>
 
-              <div className="min-h-[520px] p-8">
+              <div className="group flex flex-col p-8 lg:min-h-[470px]">
                 <div className="inline-block">
                   <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
                     {lang === "en" ? "Contact" : "聯絡我們"}
@@ -500,37 +501,47 @@ export default function Home() {
                   {lang === "en" ? "Project Inquiry" : "專案洽詢"}
                 </h3>
 
-                <p className="mt-6 text-xl leading-9 text-[#2d241c]">
-                  {lang === "en"
-                    ? "Residential, hospitality, restaurant and commercial projects."
-                    : "高端住宅、精品飯店、餐飲空間、商業空間及客製化設計專案合作。"}
-                </p>
+                <p className="mt-6 max-w-md text-xl leading-9 text-[#2d241c]">
+  {lang === "en"
+    ? "Tell us about your residential, hospitality, retail or commercial project."
+    : "歡迎與我們分享您的住宅、旅宿或商業空間專案需求。"}
+</p>
 
-                <div className="mt-10 space-y-5">
-                  <a
-                    href="mailto:hello@wevinewallcoverings.com"
-                    className="block text-xl text-[#2d241c] transition hover:text-[#6b5744]"
-                  >
-                    hello@wevinewallcoverings.com
-                  </a>
-                </div>
+                <div className="mt-10">
+  <a
+    href="mailto:hello@wevinewallcoverings.com"
+    className="block break-all text-base text-[#2d241c] transition hover:text-[#6b5744] sm:text-xl"
+  >
+    hello@wevinewallcoverings.com
+  </a>
+</div>
+
+<div className="mt-10 lg:mt-auto">
+  <button
+  type="button"
+  onClick={() => setProjectFormOpen(true)}
+  className="flex h-14 w-full max-w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition duration-300 hover:bg-[#6b5744]"
+>
+  {lang === "en" ? "Start a Project" : "開始專案洽詢"}
+</button>
+</div>
               </div>
             </div>
           </div>
 
           <div className="mt-12 border-t border-[#c7b8a5]/70 pt-6">
-            <div className="flex justify-end items-center gap-6">
-              <img
-                src="/images/brand/wevine-lockup-black.svg"
-                alt="WEVINE"
-                className="h-8 w-auto"
-              />
+  <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
+    <img
+      src="/images/brand/wevine-lockup-black.svg"
+      alt="WEVINE Wallcoverings"
+      className="h-8 w-auto"
+    />
 
-              <p className="text-sm tracking-[0.08em] text-[#2d241c]">
-                © 2026 WEVINE. All rights reserved.
-              </p>
-            </div>
-          </div>
+    <p className="text-sm tracking-[0.08em] text-[#2d241c]">
+      © 2026 WEVINE. All rights reserved.
+    </p>
+  </div>
+</div>
 
           {sampleFormOpen && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
@@ -564,6 +575,40 @@ export default function Home() {
               </div>
             </div>
           )}
+
+          {projectFormOpen && (
+  <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+    <button
+      type="button"
+      onClick={() => setProjectFormOpen(false)}
+      className="absolute inset-0 bg-black/65 backdrop-blur-md"
+      aria-label="Close project inquiry form"
+    />
+
+    <div className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto border border-[#d8cec0] bg-[#faf7f2] p-8 shadow-2xl ring-1 ring-white/30 lg:p-10">
+      <button
+        type="button"
+        onClick={() => setProjectFormOpen(false)}
+        className="absolute right-6 top-5 text-2xl font-light text-[#6f6254] transition hover:text-[#2d241c]"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+      <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#8a7965]">
+        {lang === "en" ? "Project Inquiry" : "專案洽詢"}
+      </p>
+
+      <h3 className="mb-8 pr-10 text-4xl font-light leading-tight text-[#2d241c]">
+        {lang === "en"
+          ? "Tell us about your project."
+          : "告訴我們您的專案需求"}
+      </h3>
+
+      <SampleRequestForm lang={lang} mode="project" />
+    </div>
+  </div>
+)}
         </div>
       </section>
     </main>

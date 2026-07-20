@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 type ContactPayload = {
+  formType?: "sample" | "project";
   name?: string;
   company?: string;
   email?: string;
@@ -11,6 +12,15 @@ type ContactPayload = {
   samples?: string[];
   lang?: "en" | "zh";
 };
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
 export async function POST(request: Request) {
   try {
@@ -32,10 +42,10 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(resendApiKey);
-
     const body = (await request.json()) as ContactPayload;
 
     const {
+      formType = "sample",
       name = "",
       company = "",
       email = "",
@@ -53,48 +63,90 @@ export async function POST(request: Request) {
       );
     }
 
+    const isProject = formType === "project";
+
+    const safeName = escapeHtml(name.trim() || "-");
+    const safeCompany = escapeHtml(company.trim() || "-");
+    const safeEmail = escapeHtml(email.trim());
+    const safeCountry = escapeHtml(country.trim() || "-");
+    const safeProjectType = escapeHtml(projectType.trim() || "-");
+    const safeMessage = escapeHtml(message.trim() || "-").replaceAll(
+      "\n",
+      "<br>"
+    );
+
+    const validSamples = Array.isArray(samples)
+      ? samples.filter((item): item is string => typeof item === "string")
+      : [];
+
     const selectedSamples =
-      samples.length > 0 ? samples.join(", ") : "No samples selected";
+      validSamples.length > 0
+        ? validSamples.map((item) => escapeHtml(item)).join(", ")
+        : "No samples selected";
+
+    const senderName = name.replace(/[\r\n]/g, " ").trim();
+    const requestTitle = isProject
+      ? "WEVINE Project Inquiry"
+      : "WEVINE Sample Request";
 
     // 寄給 WEVINE
     await resend.emails.send({
       from: "WEVINE Website <hello@wevinewallcoverings.com>",
       to: [contactTo],
       replyTo: email,
-      subject: `WEVINE Sample Request${name ? ` from ${name}` : ""}`,
+      subject: `${requestTitle}${senderName ? ` from ${senderName}` : ""}`,
       html: `
         <div style="font-family:Arial,sans-serif;color:#2d241c;line-height:1.7">
-          <h2>WEVINE Sample Request</h2>
+          <h2>${requestTitle}</h2>
 
           <hr>
 
-          <p><strong>Name:</strong> ${name || "-"}</p>
-          <p><strong>Company:</strong> ${company || "-"}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Country:</strong> ${country || "-"}</p>
-          <p><strong>Project Type:</strong> ${projectType || "-"}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Company:</strong> ${safeCompany}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Country:</strong> ${safeCountry}</p>
+          <p><strong>Project Type:</strong> ${safeProjectType}</p>
 
-          <hr>
+          ${
+            isProject
+              ? ""
+              : `
+                <hr>
 
-          <p><strong>Selected Samples</strong></p>
-          <p>${selectedSamples}</p>
+                <p><strong>Selected Samples</strong></p>
+                <p>${selectedSamples}</p>
+              `
+          }
 
           <hr>
 
           <p><strong>Message</strong></p>
-          <p>${message || "-"}</p>
+          <p>${safeMessage}</p>
         </div>
       `,
     });
+
+    const confirmationSubject = isProject
+      ? lang === "zh"
+        ? "我們已收到您的 WEVINE 專案洽詢"
+        : "We have received your WEVINE project inquiry"
+      : lang === "zh"
+        ? "我們已收到您的 WEVINE 樣品申請"
+        : "We have received your WEVINE sample request";
+
+    const confirmationMessage = isProject
+      ? lang === "zh"
+        ? "感謝您與 WEVINE 聯繫。我們已收到您的專案洽詢，將審閱相關資訊並盡快與您聯繫。"
+        : "Thank you for contacting WEVINE. We have received your project inquiry and will review the details and contact you shortly."
+      : lang === "zh"
+        ? "感謝您對 WEVINE 的關注。我們已收到您的樣品申請，將盡快與您聯繫。"
+        : "Thank you for your interest in WEVINE. We have received your sample request and will contact you shortly.";
 
     // 自動回覆客戶
     await resend.emails.send({
       from: "WEVINE <hello@wevinewallcoverings.com>",
       to: [email],
-      subject:
-        lang === "zh"
-          ? "我們已收到您的 WEVINE 樣品申請"
-          : "We have received your WEVINE sample request",
+      subject: confirmationSubject,
       html: `
         <div style="font-family:Arial,sans-serif;color:#2d241c;line-height:1.7">
           <h2>WEVINE</h2>
@@ -102,32 +154,30 @@ export async function POST(request: Request) {
           <p>
             ${
               lang === "zh"
-                ? `您好${name ? `，${name}` : ""}：`
-                : `Dear ${name || "there"},`
+                ? `您好${name.trim() ? `，${safeName}` : ""}：`
+                : `Dear ${name.trim() ? safeName : "there"},`
             }
           </p>
 
-          <p>
-            ${
-              lang === "zh"
-                ? "感謝您對 WEVINE 的關注。我們已收到您的樣品申請，將盡快與您聯繫。"
-                : "Thank you for your interest in WEVINE. We have received your sample request and will contact you shortly."
-            }
-          </p>
+          <p>${confirmationMessage}</p>
 
-          <p><strong>${
-            lang === "zh" ? "已選樣品" : "Selected Samples"
-          }</strong></p>
+          ${
+            isProject
+              ? ""
+              : `
+                <p>
+                  <strong>
+                    ${lang === "zh" ? "已選樣品" : "Selected Samples"}
+                  </strong>
+                </p>
 
-          <p>${selectedSamples}</p>
+                <p>${selectedSamples}</p>
+              `
+          }
 
           <br>
 
-          <p>${
-            lang === "zh"
-              ? "WEVINE 團隊"
-              : "The WEVINE Team"
-          }</p>
+          <p>${lang === "zh" ? "WEVINE 團隊" : "The WEVINE Team"}</p>
         </div>
       `,
     });
@@ -137,12 +187,8 @@ export async function POST(request: Request) {
     console.error("Contact API Error:", error);
 
     return NextResponse.json(
-      {
-        error: "Failed to send request.",
-      },
-      {
-        status: 500,
-      }
+      { error: "Failed to send request." },
+      { status: 500 }
     );
   }
 }
