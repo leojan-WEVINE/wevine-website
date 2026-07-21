@@ -13,7 +13,7 @@ export const collectionSeo = {
       "Discover Timber Trace, a collection of natural woven wallcoverings inspired by weathered wood, organic grain and architectural textures for residential, hospitality and commercial interiors.",
     image: "/images/spaces/timber-trace-space-board.jpg",
     code: "TT",
-    productCount: 28,
+    productCount: 26,
   },
   "drift-weave": {
     title: "Drift Weave | Natural Woven Wallcoverings | WEVINE",
