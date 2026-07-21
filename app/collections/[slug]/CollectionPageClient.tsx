@@ -68,7 +68,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 28 },
+      { length: 26 },
       (_, i) =>
         `/images/products/timber-trace/timber-trace-${String(i + 1).padStart(
           2,
