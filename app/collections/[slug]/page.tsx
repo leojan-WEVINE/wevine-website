@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import CollectionPageClient from "./CollectionPageClient";
 import { collectionSeo, type CollectionSlug } from "@/lib/collections-seo";
 import { collectionJsonLd } from "@/lib/schema";
@@ -61,16 +62,18 @@ export default async function CollectionPage({ params }: Props) {
   const { slug } = await params;
   const seo = collectionSeo[slug as CollectionSlug];
 
+  if (!seo) {
+    notFound();
+  }
+
   return (
     <>
-      {seo && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(collectionJsonLd(slug as CollectionSlug)),
-          }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionJsonLd(slug as CollectionSlug)),
+        }}
+      />
 
       <CollectionPageClient />
     </>
