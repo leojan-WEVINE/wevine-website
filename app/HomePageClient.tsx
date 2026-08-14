@@ -481,7 +481,7 @@ export default function Home() {
   <button
     type="button"
     onClick={() => setSampleFormOpen(true)}
-    className="inline-flex h-14 w-full max-w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition duration-300 hover:bg-[#6b5744]"
+    className="flex h-12 w-full max-w-[280px] items-center justify-center border border-[#2d241c] bg-transparent px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition duration-300 hover:bg-[#2d241c] hover:text-[#f6f2ec]"
   >
     {lang === "en" ? "Request Samples" : "申請樣品"}
   </button>
@@ -520,7 +520,7 @@ export default function Home() {
   <button
   type="button"
   onClick={() => setProjectFormOpen(true)}
-  className="flex h-14 w-full max-w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition duration-300 hover:bg-[#6b5744]"
+  className="flex h-12 w-full max-w-[280px] items-center justify-center border border-[#2d241c] bg-transparent px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition duration-300 hover:bg-[#2d241c] hover:text-[#f6f2ec]"
 >
   {lang === "en" ? "Start a Project" : "開始專案洽詢"}
 </button>

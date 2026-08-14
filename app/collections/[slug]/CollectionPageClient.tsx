@@ -581,7 +581,44 @@ style={{
             </p>
           </div>
         </div>
-      </div>
+          </div>
+        {/* TECHNICAL RESOURCES */}
+<div className="mt-10 border-t border-[#c7b8a5]/70 pt-8">
+  <p className="text-base uppercase tracking-[0.25em] text-[#2d241c]">
+    {lang === "en" ? "Technical Resources" : "技術資源"}
+  </p>
+
+  <h3 className="mt-4 text-2xl font-light leading-tight text-[#2d241c]">
+    {lang === "en"
+      ? "Maintenance & Installation Guidelines"
+      : "維護與安裝指南"}
+  </h3>
+
+  <p className="mt-4 max-w-2xl text-lg leading-8 text-black/75">
+    {lang === "en"
+      ? "Professional guidance for wall preparation, installation, seam finishing and routine care."
+      : "提供牆面準備、安裝施工、接縫處理及日常維護的專業指引。"}
+  </p>
+
+  <div className="mt-6 flex flex-wrap gap-3">
+    <a
+      href="/downloads/WEVINE-Wallcovering-Maintenance-Installation-Guidelines.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex h-12 min-w-[180px] items-center justify-center border border-[#2d241c] px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
+    >
+      {lang === "en" ? "View PDF" : "查看 PDF"}
+    </a>
+
+    <a
+      href="/downloads/WEVINE-Wallcovering-Maintenance-Installation-Guidelines.docx"
+      download
+      className="inline-flex h-12 min-w-[180px] items-center justify-center border border-[#2d241c] px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
+    >
+      {lang === "en" ? "Download Word" : "下載 Word"}
+    </a>
+  </div>
+</div>
     </div>
 
     {/* RIGHT */}
@@ -605,7 +642,7 @@ style={{
 
         <a
           href="/#contact-info"
-          className="mt-10 inline-flex h-14 w-[280px] items-center justify-center bg-[#2d241c] text-base uppercase tracking-[0.12em] text-[#f6f2ec] transition hover:bg-[#6b5744]"
+          className="mt-10 inline-flex h-12 w-[280px] max-w-full items-center justify-center border border-[#2d241c] px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
         >
           {lang === "en" ? "Request Samples" : "申請樣品"}
         </a>
