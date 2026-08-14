@@ -610,13 +610,6 @@ style={{
       {lang === "en" ? "View PDF" : "查看 PDF"}
     </a>
 
-    <a
-      href="/downloads/WEVINE-Wallcovering-Maintenance-Installation-Guidelines.docx"
-      download
-      className="inline-flex h-12 min-w-[180px] items-center justify-center border border-[#2d241c] px-6 text-sm uppercase tracking-[0.12em] text-[#2d241c] transition hover:bg-[#2d241c] hover:text-[#f6f2ec]"
-    >
-      {lang === "en" ? "Download Word" : "下載 Word"}
-    </a>
   </div>
 </div>
     </div>
