@@ -35,7 +35,7 @@ const collectionData = {
     "Gently wipe the area with a soft, non-abrasive cloth to remove dirt",
 },
     products: Array.from(
-      { length: 34 },
+      { length: 38 },
       (_, i) =>
         `/images/products/atelier-weave/atelier-weave-${String(i + 1).padStart(
           2,
@@ -599,7 +599,6 @@ style={{
       ? "Professional guidance for wall preparation, installation, seam finishing and routine care."
       : "提供牆面準備、安裝施工、接縫處理及日常維護的專業指引。"}
   </p>
-
   <div className="mt-6 flex flex-wrap gap-3">
     <a
       href="/downloads/WEVINE-Wallcovering-Maintenance-Installation-Guidelines.pdf"
