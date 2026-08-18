@@ -206,6 +206,31 @@ export const productLanguage = {
     atmosphereZh: "有機 • 輕盈 • 自然",
   },
 
+  "AW-35": {
+  patternEn: "Open Basket Weave",
+  patternZh: "疏朗籃編",
+  atmosphereEn: "Warm • Organic • Artisanal",
+  atmosphereZh: "溫潤・自然・手作",
+},
+"AW-36": {
+  patternEn: "Open Basket Weave",
+  patternZh: "疏朗籃編",
+  atmosphereEn: "Warm • Organic • Artisanal",
+  atmosphereZh: "溫潤・自然・手作",
+},
+"AW-37": {
+  patternEn: "Layered Basket Weave",
+  patternZh: "層次籃編",
+  atmosphereEn: "Earthy • Grounded • Timeless",
+  atmosphereZh: "大地・沉穩・雋永",
+},
+"AW-38": {
+  patternEn: "Open Lattice Weave",
+  patternZh: "疏朗格織",
+  atmosphereEn: "Light • Airy • Refined",
+  atmosphereZh: "明亮・輕盈・雅緻",
+},
+
   "TT-01": {
 patternEn: "Fine Reed",
 patternZh: "細蘆紋",

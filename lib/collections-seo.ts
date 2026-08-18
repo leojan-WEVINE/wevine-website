@@ -5,7 +5,7 @@ export const collectionSeo = {
       "Explore Atelier Weave, a premium collection of natural woven wallcoverings crafted from refined fibers for luxury residential, hospitality, and commercial interiors.",
     image: "/images/spaces/atelier-weave-space-board.jpg",
     code: "AW",
-    productCount: 34,
+    productCount: 38,
   },
   "timber-trace": {
     title: "Timber Trace | Natural Woven Wallcoverings | WEVINE",
